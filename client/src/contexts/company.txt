@@ -1,0 +1,52 @@
+companies: {
+    'dakdakdladlajda': {
+        name: 'boing',
+        email: 'boing@gmail.com',
+        imageUrl: 'boing.png',
+        info: 'company bla bla',
+        location: '888 Ash Road, Liverpool L1 8JQ, United Kingdom'
+        employees: [
+            {
+                id: dadjadk12342
+                name: 'Stiliyan',
+                email: 'stili@abv.bg',
+                password: '12345'
+            },
+            {
+                id: did23nidnd1
+                name: 'Stiliyan',
+                email: 'stili@abv.bg',
+                password: '12345'
+            }
+        ],
+        parts: [
+            id: asfdafsf,
+            name: Battery,
+            imageUrl: battery
+            description: Battery for Aircraft
+            pricePerPiece: 200,
+            quantity: 6
+        ]
+    },
+    '455aldslalejlzsdlz': {
+        name: 'sky batics',
+        email: 'sky batics@gmail.com',
+        imageUrl: 'sky batics.png',
+        info: 'company bla bla',
+        location: '888 Ash Road, Liverpool L1 8JQ, United Kingdom',
+        employees: [
+            {
+                id: dadjadk12342
+                name: 'Stiliyan',
+                email: 'stili@abv.bg',
+                password: '12345'
+            },
+            {
+                id: did23nidnd1
+                name: 'Stiliyan',
+                email: 'stili@abv.bg',
+                password: '12345'
+            }
+        ]
+    }
+}
