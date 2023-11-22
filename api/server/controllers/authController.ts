@@ -5,7 +5,8 @@ import * as authService from '../services/authService';
 
 import express from 'express';
 import type { NextFunction, Request, Response } from 'express';
-import { AuthData, TokenData } from '../types/IData';
+import { AuthData, CustomRequest, TokenData } from '../types/IData';
+import { verifyToken } from '../middlewares/authentication.mw';
 
 
 export const authController = express.Router();
@@ -32,10 +33,11 @@ authController.post('/login',
     }
   });
 
-authController.post('/refreshToken',
+
+authController.post('/refreshToken', verifyToken('refresh'),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const refreshToken = req.body.refreshToken as string;
+      const refreshToken = (req as CustomRequest).token;
 
       if (!refreshToken) {
         throw createHttpError(401, 'You are not authenticated!');
@@ -50,5 +52,20 @@ authController.post('/refreshToken',
   });
 
 
+authController.post('/logout', verifyToken('refresh'),
+ async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const refreshToken = (req as CustomRequest).token;
 
+    if (!refreshToken) {
+      throw createHttpError(401, 'You are not authenticated!');
+    }
+
+    await authService.deleteRefreshToken(refreshToken);
+
+    res.status(200).json('Refresh token deleted!');
+  } catch (error: unknown) {
+    next(error);
+  }
+})
 

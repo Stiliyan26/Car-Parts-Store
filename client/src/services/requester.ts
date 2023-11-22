@@ -11,7 +11,7 @@ export const requester = async (
   body: {} | null = null,
 ): Promise<ApiResponse> => {
   let options: RequestInit = {};
-  
+
   if (isNotAuthorizedRequest(url)) {
     options = await createOptions(method, body);
   } else {
@@ -69,14 +69,12 @@ const createOptions = async (
   return options;
 };
 
-export const requestFactory = () => {
-  return {
-    get: requester.bind(null, 'GET'),
-    post: requester.bind(null, 'POST'),
-    put: requester.bind(null, 'PUT'),
-    patch: requester.bind(null, 'PATCH'),
-    delete: requester.bind(null, 'DELETE'),
-  }
+export const request = {
+  get: requester.bind(null, 'GET'),
+  post: requester.bind(null, 'POST'),
+  put: requester.bind(null, 'PUT'),
+  patch: requester.bind(null, 'PATCH'),
+  delete: requester.bind(null, 'DELETE'),
 }
 
 async function getTokenDataFromStorage() {
@@ -103,8 +101,7 @@ async function getTokenDataFromStorage() {
 async function refreshAccessToken(expToCheck: number, tokenToSent: string) {
   try {
     const currentDate = new Date();
-    //const buffer = 60000;
-    const buffer = 2000;
+    const buffer = 60000;
 
     if (expToCheck && expToCheck - buffer < currentDate.getTime()) {
       const response = await fetch(`${API_URL}/auth/refreshToken`, {

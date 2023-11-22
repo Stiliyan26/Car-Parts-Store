@@ -14,6 +14,7 @@ interface UserCommon {
 
 export interface CustomRequest extends Request {
   user: AuthPayload
+  token: string 
 }
 
 export interface AuthPayload extends UserCommon, JwtPayload {

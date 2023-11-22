@@ -4,6 +4,7 @@ import { globalErrorHandler } from './middlewares/error-handlers.mw';
 import * as dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
+import { AuthPayload } from './types/IData';
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
 //Routes configuration
 routesConfig(app);
 

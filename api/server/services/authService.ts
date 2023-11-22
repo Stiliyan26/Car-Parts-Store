@@ -12,7 +12,11 @@ import { getEmployeeByEmailAndPassword } from '../repos/employeeRepo';
 import jwt from 'jsonwebtoken';
 
 export const generateToken = (payload: AuthData) => {
-  return jwt.sign(payload, process.env.JWT_SECRET_KEY as string, { expiresIn: '8s' });
+  return jwt.sign(payload, process.env.JWT_SECRET_KEY as string, { expiresIn: '30m' });
+}
+
+export const generateRefreshToken = (payload: AuthData) => {
+  return jwt.sign(payload, process.env.REFRESH_JWT_SECRET_KEY as string)
 }
 
 export const getAccessTokenExp = (accessToken: string) => {
@@ -21,13 +25,9 @@ export const getAccessTokenExp = (accessToken: string) => {
   return exp! * 1000;
 }
 
-export const generateRefreshToken = (payload: AuthData) => {
-  return jwt.sign(payload, process.env.REFRESH_JWT_SECRET_KEY as string)
-}
-
 export async function verifyRefreshToken(refreshToken: string) {
-  const existingRefreshToken = await tokenRepo.getRefreshToken({ token: refreshToken });
-
+  const existingRefreshToken = await tokenRepo.getRefreshToken(refreshToken);
+  
   if (!existingRefreshToken) {
     throw createHttpError(403, 'Refresh token is not valid!');
   }
@@ -38,7 +38,7 @@ export async function verifyRefreshToken(refreshToken: string) {
         reject(createHttpError(400, 'Token is invalid!'));
       }
 
-      await tokenRepo.deleteRefreshToken({ token: refreshToken });
+      await deleteRefreshToken(refreshToken);
 
       const { iat, ...payloadWithoutIAT } = authPayload as AuthPayload;
 
@@ -46,7 +46,7 @@ export async function verifyRefreshToken(refreshToken: string) {
       const newRefreshToken = generateRefreshToken(payloadWithoutIAT as AuthData);
       const exp = getAccessTokenExp(newAccessToken);
 
-      await tokenRepo.createRefreshToken({ token: newRefreshToken });
+      await tokenRepo.createRefreshToken(newRefreshToken);
 
       const tokenData = {
         accessToken: newAccessToken,
@@ -87,7 +87,7 @@ export async function getAuthTokens(authData: AuthData) {
   const refreshToken = generateRefreshToken(authData);
   const exp = getAccessTokenExp(accessToken);
 
-  await tokenRepo.createRefreshToken({ token: refreshToken });
+  await tokenRepo.createRefreshToken(refreshToken);
 
   return {
     accessToken,
@@ -95,3 +95,9 @@ export async function getAuthTokens(authData: AuthData) {
     exp
   }
 }
+
+export async function deleteRefreshToken(refreshToken: string) {
+  await tokenRepo.deleteRefreshToken(refreshToken);
+}
+
+

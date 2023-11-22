@@ -1,29 +1,25 @@
 import { db } from '../utils/db.server';
 
-export interface TokenCommon {
+interface Token {
   token: string
 }
 
-interface CreateRefreshToken extends TokenCommon {}
-
 export const createRefreshToken = async (
-  data: CreateRefreshToken
-) => {
+  token: string
+): Promise<Token> => {
   return await db.token.create({
     data: {
-      token: data.token
+      token
     }
   })
 }
 
-interface GetRefreshToken extends TokenCommon {}
-
 export const getRefreshToken = async (
-  data: GetRefreshToken
-): Promise<GetRefreshToken | null> => {
+  token: string
+): Promise<Token | null> => {
   return await db.token.findFirst({
     where: {
-      token: data.token
+      token
     },
     select: {
       token: true
@@ -31,14 +27,12 @@ export const getRefreshToken = async (
   })
 }
 
-interface DeleteRefreshToken extends TokenCommon {}
-
 export const deleteRefreshToken = async (
-  data: DeleteRefreshToken
-) => {
+  token: string
+): Promise<Token> => {
   return await db.token.delete({
     where: {
-      token: data.token
+      token
     }
   })
 }

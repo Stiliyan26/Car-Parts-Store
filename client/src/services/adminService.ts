@@ -1,4 +1,4 @@
-import { requestFactory } from './requester';
+import { request } from './requester';
 import { ApiResponse } from '../types/interface/IData';
 import { CreateCompanyData, CreateEmployeeData } from '../types/interface/IForm';
 import { API_URL } from '../constants/GlabalConstants';
@@ -6,7 +6,6 @@ import { SetTokens } from '../types/interface/IFunc';
 
 const baseUrl = `${API_URL}/admin`;
 
-const request = requestFactory();
 export const createCompany = (data: CreateCompanyData): Promise<ApiResponse> =>
   request.post(`${baseUrl}/create`, data);
 
