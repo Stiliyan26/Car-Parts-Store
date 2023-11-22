@@ -32,12 +32,12 @@ const useAuthAsyncStorage = (
     }
   }, []);
 
-  const getUserStorage = async () => {
+  const getUserStorage = async (): Promise<AuthData> => {
     try {
       const userDataFromStorage = await AsyncStorage.getItem(key);
 
       return userDataFromStorage
-        ? JSON.parse(userDataFromStorage)
+        ? JSON.parse(userDataFromStorage) as AuthData
         : initialValue
     } catch (error) {
       console.error((error as Error).message);
@@ -46,7 +46,7 @@ const useAuthAsyncStorage = (
     return initialValue;
   };
 
-  const setAuthStorage = async (value: AuthData) => {
+  const setAuthStorage = async (value: AuthData): Promise<void> => {
     try {
       await AsyncStorage.setItem(key, JSON.stringify(value));
 
@@ -56,19 +56,10 @@ const useAuthAsyncStorage = (
     }
   }
 
-  const setNewTokensStorage = async (tokenData: TokenData) => {
-    try {
-      setUser(userData => ({ ...userData, tokenData }));
-    } catch (error) {
-      console.error((error as Error).message);
-    }
-  }
-
   return {
     user,
     getUserStorage,
     setAuthStorage,
-    setNewTokensStorage
   };
 }
 

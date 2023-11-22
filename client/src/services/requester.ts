@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { triggerStorageListener } from '../utils/storageEventLiseners';
 
 type RequestMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
 export const requester = async (
   method: RequestMethod = 'GET',
   url: string = '',
@@ -77,26 +78,6 @@ export const request = {
   delete: requester.bind(null, 'DELETE'),
 }
 
-async function getTokenDataFromStorage() {
-  try {
-    const storageData = await AsyncStorage.getItem(authStorageKey);
-
-    if (!storageData) {
-      return null;
-    }
-
-    const { tokenData } = JSON.parse(storageData) as AuthData;
-
-    if (tokenData.accessToken && tokenData.refreshToken && tokenData.exp) {
-      return tokenData;
-    }
-
-
-    return null;
-  } catch (error) {
-    throw error;
-  }
-}
 
 async function refreshAccessToken(expToCheck: number, tokenToSent: string) {
   try {
@@ -110,7 +91,6 @@ async function refreshAccessToken(expToCheck: number, tokenToSent: string) {
           'Authorization': `Bearer ${tokenToSent}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ refreshToken: tokenToSent })
       });
 
       if (response.status === 200) {
@@ -127,6 +107,27 @@ async function refreshAccessToken(expToCheck: number, tokenToSent: string) {
         throw new Error('Refresh token request failed');
       }
     }
+
+    return null;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getTokenDataFromStorage() {
+  try {
+    const storageData = await AsyncStorage.getItem(authStorageKey);
+
+    if (!storageData) {
+      return null;
+    }
+
+    const { tokenData } = JSON.parse(storageData) as AuthData;
+
+    if (tokenData.accessToken && tokenData.refreshToken && tokenData.exp) {
+      return tokenData;
+    }
+
 
     return null;
   } catch (error) {

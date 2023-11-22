@@ -52,7 +52,7 @@ authController.post('/refreshToken', verifyToken('refresh'),
   });
 
 
-authController.post('/logout', verifyToken('refresh'),
+authController.delete('/logout', verifyToken('refresh'),
  async (req: Request, res: Response, next: NextFunction) => {
   try {
     const refreshToken = (req as CustomRequest).token;

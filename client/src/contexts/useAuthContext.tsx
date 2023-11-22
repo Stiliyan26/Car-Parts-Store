@@ -1,9 +1,9 @@
 import { ChildrenProps } from '../types/interface/IProps';
 import { AuthData, TokenData } from '../types/interface/IData';
 import { authStorageKey } from '../constants/GlabalConstants';
-
-import { createContext, useContext } from 'react';
 import useAuthAsyncStorage from '../hooks/localStorage/useAuthAsyncStorage';
+import { deleteRefreshToken } from '../services/authService';
+import { createContext, useContext } from 'react';
 
 interface AuthContextType {
   user: AuthData,
@@ -12,7 +12,6 @@ interface AuthContextType {
   login: (authData: AuthData) => Promise<void>,
   logout: () => Promise<void>,
   getUser: () => Promise<AuthData>,
-  setNewTokens: (tokenData: TokenData) => void
 }
 //storage setup
 
@@ -42,7 +41,6 @@ const defaultContextValue: AuthContextType = {
   getUser: async () => {
     return initialValue;
   },
-  setNewTokens: () => { }
 };
 
 const AuthContext = createContext<AuthContextType>(defaultContextValue);
@@ -52,15 +50,15 @@ export const AuthProvider: React.FC<ChildrenProps> = ({ children }) => {
     user,
     setAuthStorage,
     getUserStorage,
-    setNewTokensStorage
   } = useAuthAsyncStorage(authStorageKey, initialValue);
 
   const login = async (authData: AuthData) => await setAuthStorage(authData);
 
-  const logout = async () => await setAuthStorage(initialValue);
+  const logout = async () => {
+    await deleteRefreshToken(user.tokenData.refreshToken);
 
-  const setNewTokens = async (tokenData: TokenData) =>
-    await setNewTokensStorage(tokenData);
+    await setAuthStorage(initialValue);
+  }
 
   const getUser = async () => {
     return await getUserStorage();
@@ -73,7 +71,6 @@ export const AuthProvider: React.FC<ChildrenProps> = ({ children }) => {
     login,
     logout,
     getUser,
-    setNewTokens
   };
 
   return (

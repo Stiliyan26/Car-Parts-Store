@@ -13,7 +13,7 @@ import {
 } from '../../../constants/routerConstants';
 import { FormSourcePages, formSourcePagesMapper } from '../../../types/enums';
 import { loginNavOptions } from '../../../utils/navigationOptions';
-import { getUserByEmailAsync } from '../../../services/authService';
+import { getUserByEmail } from '../../../services/authService';
 import { LoginData } from '../../../types/interface/IForm';
 import { ApiError, ApiSuccess } from '../../../types/interface/IData';
 
@@ -44,7 +44,7 @@ const Login = () => {
     };
 
     try {
-      const response = await getUserByEmailAsync(loginData);
+      const response = await getUserByEmail(loginData);
 
       if (response.statusCode === 200) {
         setApiError('');
