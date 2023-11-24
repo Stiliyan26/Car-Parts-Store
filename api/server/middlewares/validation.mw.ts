@@ -17,13 +17,8 @@ export function getValidationResult() {
     next();
   }
 }
-
-function stringValidation(
-  value: string,
-  fieldName: string,
-  min: number,
-  max: number
-) {
+//helper functions
+function stringValidation(value: string, fieldName: string, min: number, max: number) {
   if (!value) {
     throw new Error(`${fieldName} is required!`);
   }
@@ -40,10 +35,24 @@ function stringValidation(
   return true;
 }
 
-function emailValidation(
-  email: string,
-  max: number
-) {
+function numberValidation(value: string, fieldName: string, min: number, max: number) {
+  if (!value) {
+    throw new Error(`${fieldName} is required!`);
+  }
+  else if (typeof value != 'number') {
+    throw new Error(`${fieldName} should be a number!`);
+  }
+  else if (value < min) {
+    throw new Error(`${fieldName} should be at least ${min}!`)
+  }
+  else if (value > max) {
+    throw new Error(`${fieldName} should be less than ${max}!`)
+  }
+
+  return true;
+}
+
+function emailValidation(email: string, max: number) {
   if (!email) {
     throw new Error('Email is required!');
   }
@@ -59,7 +68,7 @@ function emailValidation(
 
   return true;
 }
-
+//Model validation
 export function checkLoginBody() {
   return checkSchema({
     email: {
@@ -135,4 +144,33 @@ export function checkCreateEmployeeBody() {
   });
 }
 
+export function checkCreatePartBody() {
+  return checkSchema({
+    name: {
+      custom: {
+        options: (name: string) => stringValidation(name, 'Name', 4, 30)
+      }
+    },
+    imageUrl: {
+      custom: {
+        options: (imageUrl: string) => stringValidation(imageUrl, 'ImageUrl', 4, 30)
+      }
+    },
+    description: {
+      custom: {
+        options: (description: string) => stringValidation(description, 'Description', 5, 50)
+      }
+    },
+    pricePerPiece: {
+      custom: {
+        options: (pricePerPiece: string) => numberValidation(pricePerPiece, 'Price per piece', 10, 50)
+      }
+    },
+    quantity: {
+      custom: {
+        options: (quantity: string) => numberValidation(quantity, 'Quantity', 5, 50)
+      }
+    }
+  });
+}
 

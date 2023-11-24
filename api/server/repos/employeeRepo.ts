@@ -1,6 +1,6 @@
 import * as roleRepo from '../repos/roleRepo';
 
-import { EmployeeData } from '../types/IData';
+import { EmployeeData } from '../types/core.interfaces';
 import { hashPassword } from '../utils/helpers';
 
 import { db } from '../utils/db.server';

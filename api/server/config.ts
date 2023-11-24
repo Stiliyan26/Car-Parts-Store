@@ -4,7 +4,7 @@ import { globalErrorHandler } from './middlewares/error-handlers.mw';
 import * as dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
-import { AuthPayload } from './types/IData';
+import { AuthPayload } from './types/core.interfaces';
 
 dotenv.config();
 

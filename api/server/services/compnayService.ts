@@ -1,5 +1,5 @@
 import * as partRepo from '../repos/partRepo';
-import { CreatePartReqBody } from '../types/IRequestBody';
+import { CreatePartReqBody } from '../types/request.interfaces';
 
 export const createPart = async (data: CreatePartReqBody) => {
   return await partRepo.createPart(data);

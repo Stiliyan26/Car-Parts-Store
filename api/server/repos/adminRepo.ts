@@ -1,4 +1,4 @@
-import { AdminData } from '../types/IData';
+import { AdminData } from '../types/core.interfaces';
 import { hashPassword } from '../utils/helpers';
 
 import { db } from '../utils/db.server';

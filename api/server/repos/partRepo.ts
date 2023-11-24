@@ -1,5 +1,5 @@
-import { CreatePartReqBody } from '../types/IRequestBody';
-import { CreatePartResult, GetAllPartResult } from '../types/repoInterfaces/IPartRepo';
+import { CreatePartReqBody } from '../types/request.interfaces';
+import { CreatePartResult, GetAllPartResult } from '../types/repo-interfaces/part-repo.interfaces';
 
 import { db } from '../utils/db.server';
 

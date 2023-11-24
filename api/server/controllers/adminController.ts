@@ -7,7 +7,7 @@ import {
 import { createHttpError } from '../utils/helpers';
 import { verifyToken, isAdmin } from '../middlewares/authentication.mw';
 import * as adminService from '../services/adminService';
-import { CreateCompanyReqBody, EmployeeReqBody } from '../types/IRequestBody';
+import { CreateCompanyReqBody, EmployeeReqBody } from '../types/request.interfaces';
 
 import express from 'express';
 import type { NextFunction, Request, Response } from 'express';
@@ -35,7 +35,7 @@ adminController.post('/create',
     }
   });
 
-adminController.get('/allCompanies',
+adminController.get('/all',
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const companies = await adminService.getAllCompanies();

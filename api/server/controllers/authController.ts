@@ -5,7 +5,7 @@ import * as authService from '../services/authService';
 
 import express from 'express';
 import type { NextFunction, Request, Response } from 'express';
-import { AuthData, CustomRequest, TokenData } from '../types/IData';
+import { AuthData, CustomRequest, TokenData } from '../types/core.interfaces';
 import { verifyToken } from '../middlewares/authentication.mw';
 
 export const authController = express.Router();

@@ -1,5 +1,5 @@
 import * as companyRepo from '../repos/companyRepo';
-import { CreateCompanyReqBody, EmployeeReqBody } from '../types/IRequestBody';
+import { CreateCompanyReqBody, EmployeeReqBody } from '../types/request.interfaces';
 
 
 export const createCompany = async (data: CreateCompanyReqBody) => {

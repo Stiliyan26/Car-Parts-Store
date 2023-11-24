@@ -1,4 +1,4 @@
-import { AuthPayload } from "./types/IData";
+import { AuthPayload } from "./types/core.interfaces";
 
 export {}
 

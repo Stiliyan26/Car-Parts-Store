@@ -42,20 +42,6 @@ export interface TokenData {
   exp: number
 }
 
-export interface PartDataCommon {
-  id: string,
-  name: string,
-  description: string,
-  pricePerPiece: number,
-  imageUrl: string,
-  quantity: number
-}
-
-export interface CompanyCommon {
-  name: string,
-  imageUrl: string,
-  location: string
-}
 
 
 

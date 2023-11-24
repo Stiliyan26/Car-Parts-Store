@@ -1,4 +1,4 @@
-import { AuthPayload, CustomRequest } from '../types/IData';
+import { AuthPayload, CustomRequest } from '../types/core.interfaces';
 import { createHttpError } from '../utils/helpers';
 
 import type { NextFunction, Request, Response } from 'express';

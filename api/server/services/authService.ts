@@ -4,7 +4,7 @@ import {
   AuthData,
   AuthPayload,
   EmployeeData,
-} from '../types/IData';
+} from '../types/core.interfaces';
 import * as tokenRepo from '../repos/tokenRepo';
 import { getAdminByEmailAndPassword } from '../repos/adminRepo';
 import { getEmployeeByEmailAndPassword } from '../repos/employeeRepo';

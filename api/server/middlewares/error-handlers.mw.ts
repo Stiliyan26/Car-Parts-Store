@@ -1,4 +1,4 @@
-import { StatusError } from '../types/IData';
+import { StatusError } from '../types/core.interfaces';
 
 import type { NextFunction, Request, Response } from 'express';
 

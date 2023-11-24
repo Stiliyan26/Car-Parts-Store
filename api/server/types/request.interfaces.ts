@@ -1,9 +1,6 @@
-import { CompanyCommon } from './IData';
+import { CompanyCommon, EmployeeCommon, PartCommon } from './common.interfaces';
 
-export interface EmployeeReqBody {
-  name: string,
-  email: string,
-  role: string,
+export interface EmployeeReqBody extends EmployeeCommon {
   password: string,
   repeatPassword: string
 }
@@ -13,11 +10,9 @@ export interface CreateCompanyReqBody extends CompanyCommon {
   info: string,
 };
 
-export interface CreatePartReqBody {
-  name: string,
+export interface CreatePartReqBody extends PartCommon {
   imageUrl: string,
   description: string,
-  pricePerPiece: number,
   quantity: number,
   companyId: string
 }

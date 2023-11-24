@@ -7,8 +7,8 @@ import {
   GetEmployeeData,
   CreateEmployeeData,
   CreateEmployeeResult
-} from '../types/repoInterfaces/ICompanyRepo';
-import { CreateCompanyReqBody } from '../types/IRequestBody';
+} from '../types/repo-interfaces/company-repo.interfaces';
+import { CreateCompanyReqBody } from '../types/request.interfaces';
 
 import { db } from '../utils/db.server';
 

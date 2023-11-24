@@ -1,4 +1,4 @@
-import { CompanyCommon } from '../IData'
+import { CompanyCommon, EmployeeCommon } from '../common.interfaces'
 // COMPANY INTERFACES
 
 //CREATE COMPANY
@@ -20,20 +20,17 @@ export interface GetCompanyByIdResult extends CompanyCommon {
   employees: GetEmployeeData[]
 }
 //EMPLOYEE INTERFACES //
-export interface EmployeeDataCommon {
-  name: string,
-  email: string,
-  role: string
-}
+
 //GET EMPLOYEE
-export interface GetEmployeeData extends EmployeeDataCommon {
+export interface GetEmployeeData extends EmployeeCommon {
   id: string
 }
 //CREATE EMPLOYEE
-export interface CreateEmployeeData extends EmployeeDataCommon {
+export interface CreateEmployeeData extends EmployeeCommon {
   password: string
 }
 
-export interface CreateEmployeeResult extends EmployeeDataCommon {
+//CREATE EMPLOYEE
+export interface CreateEmployeeResult extends EmployeeCommon {
   id: string
 }

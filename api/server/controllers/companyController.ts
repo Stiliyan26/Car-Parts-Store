@@ -4,24 +4,27 @@ import * as companyService from '../services/compnayService';
 
 import express from 'express';
 import type { NextFunction, Request, Response } from 'express';
+import { checkCreatePartBody } from '../middlewares/validation.mw';
 
 export const companyController = express.Router();
 
 companyController.use(verifyToken());
 
-companyController.post('/part/create', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const part = await companyService.createPart(req.body);
+companyController.post('/part/create',
+  checkCreatePartBody(),
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const part = await companyService.createPart(req.body);
 
-    if (!part) {
-      throw createHttpError(404, 'Part not created!');
+      if (!part) {
+        throw createHttpError(404, 'Part not created!');
+      }
+
+      return res.status(200).json(part);
+    } catch (error: unknown) {
+      next(error);
     }
-
-    return res.status(200).json(part);
-  } catch (error: unknown) {
-    next(error);
-  }
-});
+  });
 
 companyController.get('/part/all', async (req: Request, res: Response, next: NextFunction) => {
   try {
