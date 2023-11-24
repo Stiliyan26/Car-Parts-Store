@@ -1,12 +1,12 @@
 import { checkLoginBody } from '../middlewares/validation.mw';
 import { getValidationResult } from '../middlewares/validation.mw';
-import { createHttpError } from '../utils/helpers';
 import * as authService from '../services/authService';
 
 import express from 'express';
 import type { NextFunction, Request, Response } from 'express';
 import { AuthData, CustomRequest, TokenData } from '../types/core.interfaces';
 import { verifyToken } from '../middlewares/authentication.mw';
+import { REFRESH_TOKEN } from '../constants/globalConstants';
 
 export const authController = express.Router();
 
@@ -33,14 +33,10 @@ authController.post('/login',
   });
 
 
-authController.post('/refreshToken', verifyToken('refresh'),
+authController.post('/refreshToken', verifyToken(REFRESH_TOKEN),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const refreshToken = (req as CustomRequest).token;
-
-      if (!refreshToken) {
-        throw createHttpError(401, 'You are not authenticated!');
-      }
 
       const tokenData = await authService.verifyRefreshToken(refreshToken);
 
@@ -51,14 +47,10 @@ authController.post('/refreshToken', verifyToken('refresh'),
   });
 
 
-authController.delete('/logout', verifyToken('refresh'),
+authController.delete('/logout', verifyToken(REFRESH_TOKEN),
  async (req: Request, res: Response, next: NextFunction) => {
   try {
     const refreshToken = (req as CustomRequest).token;
-
-    if (!refreshToken) {
-      throw createHttpError(401, 'You are not authenticated!');
-    }
 
     await authService.deleteRefreshToken(refreshToken);
 

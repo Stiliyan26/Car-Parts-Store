@@ -1,6 +1,6 @@
-import { createHttpError } from '../utils/helpers';
 import { verifyToken } from '../middlewares/authentication.mw';
 import * as companyService from '../services/compnayService';
+import CreationFailedException from '../exceptions/CreationFailedException';
 
 import express from 'express';
 import type { NextFunction, Request, Response } from 'express';
@@ -17,7 +17,7 @@ companyController.post('/part/create',
       const part = await companyService.createPart(req.body);
 
       if (!part) {
-        throw createHttpError(404, 'Part not created!');
+        throw new CreationFailedException('Part');
       }
 
       return res.status(200).json(part);

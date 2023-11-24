@@ -3,21 +3,25 @@ import {
   checkCreateEmployeeBody,
   getValidationResult
 } from '../middlewares/validation.mw';
-
-import { createHttpError } from '../utils/helpers';
 import { verifyToken, isAdmin } from '../middlewares/authentication.mw';
 import * as adminService from '../services/adminService';
 import { CreateCompanyReqBody, EmployeeReqBody } from '../types/request.interfaces';
+import NotFoundException from '../exceptions/NotFoundException';
+import BadRequestException from '../exceptions/BadRequestException';
 
 import express from 'express';
 import type { NextFunction, Request, Response } from 'express';
+import CreationFailedException from '../exceptions/CreationFailedException';
 
 export const adminController = express.Router();
+
+
+const companiesUrl = '/companies';
 
 adminController.use(verifyToken());
 adminController.use(isAdmin());
 
-adminController.post('/create',
+adminController.post(`${companiesUrl}/create`,
   checkCreateCompanyBody(),
   getValidationResult(),
   async (req: Request, res: Response, next: NextFunction) => {
@@ -26,27 +30,27 @@ adminController.post('/create',
       const company = await adminService.createCompany(data);
 
       if (!company) {
-        throw createHttpError(404, 'Company not created!');
+        throw new NotFoundException(data.name);
       }
-      
+
       return res.status(200).json(company);
     } catch (error: unknown) {
       next(error);
     }
   });
 
-adminController.get('/all',
+adminController.get(`${companiesUrl}/all`,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const companies = await adminService.getAllCompanies();
-      
+
       return res.status(200).json(companies);
     } catch (error: unknown) {
       next(error);
     }
   });
 
-adminController.post('/employees/create',
+adminController.post(`${companiesUrl}/employees/create`,
   checkCreateEmployeeBody(),
   getValidationResult(),
   async (req: Request, res: Response, next: NextFunction) => {
@@ -55,15 +59,15 @@ adminController.post('/employees/create',
       const employeeData: EmployeeReqBody = req.body;
 
       if (employeeData.password !== employeeData.repeatPassword) {
-        throw createHttpError(400, 'Passwords do not match!');
+        throw new BadRequestException('Passwords do not match!');
       }
 
       const newEmployee = await adminService.addEmployeeToCompany(companyId, employeeData);
 
       if (!newEmployee) {
-        throw createHttpError(404, 'Employee not created!');
+        throw new CreationFailedException('Employee');
       }
-      
+
       res.status(200).json(newEmployee);
     } catch (error: unknown) {
       next(error);
@@ -71,15 +75,15 @@ adminController.post('/employees/create',
   });
 
 
-adminController.get('/:companyId',
+adminController.get(`${companiesUrl}/:companyId`,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { companyId } = req.params;
 
       const company = await adminService.getCompanyById(companyId);
-      
+
       if (!company) {
-        throw createHttpError(404, 'Company not found!');
+        throw new NotFoundException('Company');
       }
 
       return res.status(200).json(company);

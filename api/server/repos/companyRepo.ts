@@ -123,7 +123,7 @@ export const addEmployeeToCompany = async (
   employeeData: CreateEmployeeData
 ): Promise<CreateEmployeeResult | null> => {
   const roleId = await roleRepo.getRoleIdByName(employeeData.role);
-
+  
   if (roleId) {
     const newEmployee = await db.employee.create({
       data: {
@@ -144,7 +144,7 @@ export const addEmployeeToCompany = async (
         }
       }
     })
-
+    
     return { ...newEmployee, role: newEmployee.role.name };
   }
 

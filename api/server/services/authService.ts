@@ -1,4 +1,3 @@
-import createHttpError from 'http-errors';
 import {
   AdminData,
   AuthData,
@@ -8,6 +7,9 @@ import {
 import * as tokenRepo from '../repos/tokenRepo';
 import { getAdminByEmailAndPassword } from '../repos/adminRepo';
 import { getEmployeeByEmailAndPassword } from '../repos/employeeRepo';
+import AuthenticationTokenMissingException from '../exceptions/AuthenticationTokenMissingException';
+import UserNotFoundException from '../exceptions/UserNotFoundException';
+import InvalidAuthenticationTokenException from '../exceptions/InvalidAuthenticationTokenException';
 
 import jwt from 'jsonwebtoken';
 
@@ -29,13 +31,13 @@ export async function verifyRefreshToken(refreshToken: string) {
   const existingRefreshToken = await tokenRepo.getRefreshToken(refreshToken);
   
   if (!existingRefreshToken) {
-    throw createHttpError(403, 'Refresh token is not valid!');
+    throw new AuthenticationTokenMissingException();
   }
 
   return new Promise(async (resolve, reject) => {
     jwt.verify(refreshToken, process.env.REFRESH_JWT_SECRET_KEY as string, async (error, authPayload) => {
       if (error) {
-        reject(createHttpError(400, 'Token is invalid!'));
+        reject(new InvalidAuthenticationTokenException());
       }
 
       await deleteRefreshToken(refreshToken);
@@ -73,7 +75,7 @@ export async function getUser(email: string, password: string) {
   }
 
   if (!user) {
-    throw createHttpError(401, 'Email or password is incorrect!');
+    throw new UserNotFoundException('Email or password is incorrect!');
   }
 
   const isAdmin = IsUserAdmin(user);
