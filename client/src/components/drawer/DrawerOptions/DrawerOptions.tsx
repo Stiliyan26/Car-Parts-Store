@@ -3,7 +3,7 @@ import styles from './DrawerOptions.style';
 import BaseText from '../../common/BaseText/BaseText';
 
 import { useAuthContext } from '../../../contexts/useAuthContext';
-import { otherOptions } from '../../../constants/IterableData';
+import { otherOptions } from '../../../utils/helperFunctions';
 
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';

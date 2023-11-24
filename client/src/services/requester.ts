@@ -25,7 +25,6 @@ export const requester = async (
         await refreshAccessToken(tokenData.exp, tokenData.refreshToken);
 
       if (newTokenData) {
-        console.log('Token refreshed!');
         triggerStorageListener();
         accessToken = newTokenData.accessToken;
       }
@@ -93,7 +92,7 @@ async function refreshAccessToken(expToCheck: number, tokenToSent: string) {
         },
       });
 
-      if (response.status === 200) {
+      if (response.ok) {
         const tokenData: TokenData = await response.json();
 
         const authData = await getAuthStorageData();

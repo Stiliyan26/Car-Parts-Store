@@ -14,7 +14,6 @@ import { CreateEmployeeData } from '../../../types/interface/IForm';
 import { createEmployee } from '../../../services/adminService';
 import { ApiError, ApiSuccess } from '../../../types/interface/IData';
 import { useCurrentCompanyContext } from '../../../contexts/useCurrentCompanyContext';
-import { useAuthContext } from '../../../contexts/useAuthContext';
 
 import { useLocalSearchParams, router } from 'expo-router';
 import { useState } from 'react';
@@ -28,7 +27,6 @@ interface CreateUserInitValues {
 }
 
 const CreateEmployeeForm = () => {
-  const { setNewTokens } = useAuthContext(); 
   const { addEmployee } = useCurrentCompanyContext();
 
   const [apiError, setApiError] = useState<string>('');
@@ -60,7 +58,7 @@ const CreateEmployeeForm = () => {
     }
 
     try {
-      const response = await createEmployee(companyId, newEmployee, setNewTokens);
+      const response = await createEmployee(companyId, newEmployee);
 
       if (response.statusCode === 200) {
         setApiError('');

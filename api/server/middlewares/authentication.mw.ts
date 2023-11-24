@@ -9,7 +9,7 @@ export function verifyToken(tokenType: 'access' | 'refresh' = 'access') {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
       const authHeader = req.headers['authorization'];
-      const token = authHeader?.split(' ')[1];
+      const token = authHeader?.split(' ')[1].trim();
 
       if (token === undefined) {
         throw createHttpError(401, 'Token is absent!');

@@ -1,7 +1,6 @@
 import { getCompanyById } from '../services/adminService';
 import { ApiSuccess, CompanyData, EmployeeData } from '../types/interface/IData';
 import { ChildrenProps } from '../types/interface/IProps';
-import { useAuthContext } from './useAuthContext';
 
 import { createContext, useContext, useEffect, useState } from 'react';
 
@@ -22,8 +21,6 @@ const defaultContextValue: CurrentCompanyContextType = {
 const CurrentCompanyContext = createContext<CurrentCompanyContextType>(defaultContextValue);
 
 export const CurrentCompanyProvider: React.FC<ChildrenProps> = ({ children }) => {
-  const { setNewTokens } = useAuthContext();
-
   const [company, setCompany] = useState<CompanyData | undefined>(undefined);
   const [currentCompanyId, setCurrentCompanyId] = useState<string>('');
 
@@ -61,7 +58,7 @@ export const CurrentCompanyProvider: React.FC<ChildrenProps> = ({ children }) =>
 
   useEffect(() => {
     if (currentCompanyId) {
-      getCompanyById(currentCompanyId, setNewTokens)
+      getCompanyById(currentCompanyId)
         .then(res => {
           if (res.statusCode === 200) {
             setCompany((res as ApiSuccess).payload);

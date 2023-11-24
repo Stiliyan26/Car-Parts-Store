@@ -16,6 +16,11 @@ export const globalErrorHandler = (
     errorMessage = 'Email already exists!';
   }
 
+  else if (error.code === 'P2003') {
+    statusCode = 422;
+    errorMessage = 'Foreign key constraint failed on the field: `foreign key`'
+  }
+
   if (error.statusCode && error.message) {
     statusCode = error.statusCode;
     errorMessage = error.message;

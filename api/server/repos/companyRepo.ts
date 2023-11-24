@@ -1,15 +1,23 @@
 import * as roleRepo from '../repos/roleRepo';
-import { EmployeeData } from '../types/IData';
 import { hashPassword } from '../utils/helpers';
+import {
+  CreateCompanyResult,
+  GetAllCompanyResult,
+  GetCompanyByIdResult,
+  GetEmployeeData,
+  CreateEmployeeData,
+  CreateEmployeeResult
+} from '../types/repoInterfaces/ICompanyRepo';
+import { CreateCompanyReqBody } from '../types/IRequestBody';
 
 import { db } from '../utils/db.server';
-import { Prisma } from '.prisma/client';
 
-type CreateCompanyData = Prisma.Args<typeof db.company, 'create'>['data'];
-type CreateCompanyResult = Prisma.Result<typeof db, Prisma.CompanyCreateArgs, 'create'>['select'];
+//import { Prisma } from '.prisma/client';
 
+// type CreateCompanyData = Prisma.Args<typeof db.company, 'create'>['data'];
+// type CreateCompanyResult = Prisma.Result<typeof db, Prisma.CompanyCreateArgs, 'create'>['select'];
 export const createCompany = async (
-  data: CreateCompanyData
+  data: CreateCompanyReqBody
 ): Promise<CreateCompanyResult | null> => {
   return await db.company.create({
     data: {
@@ -17,7 +25,7 @@ export const createCompany = async (
       email: data.email,
       imageUrl: data.imageUrl,
       info: data.info,
-      location: data.location
+      location: data.location,
     },
     select: {
       id: true,
@@ -30,18 +38,18 @@ export const createCompany = async (
   })
 }
 
-export const allCompanies = async (): Promise<CreateCompanyResult[]> => {
+export const allCompanies = async (): Promise<GetAllCompanyResult[]> => {
   return await db.company.findMany({
     select: {
       id: true,
       name: true,
       imageUrl: true,
-      location: true,
+      location: true
     }
   });
 }
 
-export const getCompanyById = async (id: string): Promise<CreateCompanyResult | null> => {
+export const getCompanyById = async (id: string): Promise<GetCompanyByIdResult | null> => {
   return await db.company.findUnique({
     where: {
       id
@@ -65,19 +73,19 @@ export const getCompanyById = async (id: string): Promise<CreateCompanyResult | 
   }).then(company => {
     if (company) {
       const changedEmployees = company.employees
-      .map(empData => ({
-        ...empData,
-        role: empData.role.name
-      }))
+        .map(empData => ({
+          ...empData,
+          role: empData.role.name
+        }))
 
-    return { ...company, employees: changedEmployees}
+      return { ...company, employees: changedEmployees }
     }
 
     return null;
   })
 }
 
-export const getEmployeesByCompanyId = async (id: string): Promise<EmployeeData[] | null> => {
+export const getEmployeesByCompanyId = async (id: string): Promise<GetEmployeeData[] | null> => {
   return await db.company.findUnique({
     where: {
       id
@@ -108,19 +116,6 @@ export const getEmployeesByCompanyId = async (id: string): Promise<EmployeeData[
       return null;
     }
   });
-}
-
-interface CreateEmployeeData {
-  name: string,
-  email: string,
-  role: string,
-  password: string
-}
-
-interface CreateEmployeeResult {
-  name: string,
-  email: string,
-  role: string
 }
 
 export const addEmployeeToCompany = async (

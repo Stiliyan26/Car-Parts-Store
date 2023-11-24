@@ -58,7 +58,9 @@ export async function verifyRefreshToken(refreshToken: string) {
     })
   })
 }
-
+function IsUserAdmin(user: unknown): user is EmployeeData { 
+  return (user as EmployeeData).role === undefined 
+}; 
 export async function getUser(email: string, password: string) {
   let user: AdminData | EmployeeData | null = null;
 
@@ -74,7 +76,7 @@ export async function getUser(email: string, password: string) {
     throw createHttpError(401, 'Email or password is incorrect!');
   }
 
-  const isAdmin = (user as EmployeeData).role === undefined;
+  const isAdmin = IsUserAdmin(user);
 
   return {
     ...user,

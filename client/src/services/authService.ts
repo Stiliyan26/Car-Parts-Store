@@ -19,7 +19,7 @@ export const deleteRefreshToken = async (refreshToken: string): Promise<void> =>
       }
     });
 
-    if (response.status === 200) {
+    if (response.ok) {
       console.log("Refresh token deleted!");
     }
   } catch (error: unknown) {

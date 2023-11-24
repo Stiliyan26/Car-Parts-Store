@@ -13,7 +13,6 @@ import { CreateCompanyData } from '../../../types/interface/IForm';
 import { createCompany } from '../../../services/adminService';
 import { ApiError, ApiSuccess } from '../../../types/interface/IData';
 import { useCompaniesContext } from '../../../contexts/useCompaniesContext';
-import { useAuthContext } from '../../../contexts/useAuthContext';
 
 import { router } from 'expo-router';
 import { useState } from 'react';
@@ -27,8 +26,6 @@ interface CreateCompanyInitValues {
 }
 
 const CreateCompanyForm = () => {
-  const { setNewTokens } = useAuthContext();
-
   const { addCompany } = useCompaniesContext();
 
   const [apiError, setApiError] = useState<string>('');
@@ -58,7 +55,7 @@ const CreateCompanyForm = () => {
     }
 
     try {
-      const response = await createCompany(companyData, setNewTokens);
+      const response = await createCompany(companyData);
       
       if (response.statusCode === 200) {
         setApiError('');

@@ -8,7 +8,6 @@ import type { NextFunction, Request, Response } from 'express';
 import { AuthData, CustomRequest, TokenData } from '../types/IData';
 import { verifyToken } from '../middlewares/authentication.mw';
 
-
 export const authController = express.Router();
 
 interface LoginBody {

@@ -13,53 +13,53 @@ import useEmployeeData from '../../../../hooks/useEmployeeData';
 const columns = ['Image', 'Name', 'Price per piece', 'Quantity']
 
 const PartsInventory = () => {
-    const { company } = useEmployeeData();
-    
-    const parts = company?.parts;
+  const { company } = useEmployeeData();
 
-    return (
-        <View style={styles.container}>
-            <HeaderForList
-                headerTitle='Inventory'
-            />
+  const parts = company?.parts;
 
-            <View style={styles.headerContainer}>
-                {columns.map((col, index) => (
-                    <BaseText
-                        key={`${col} ${index}`}
-                        style={[
-                            styles.columnStyle,
-                            getFlexBasis(columns.length)
-                        ]}
-                    >
-                        {col}
-                    </BaseText>
-                ))}
-            </View>
+  return (
+    <View style={styles.container}>
+      <HeaderForList
+        headerTitle='Inventory'
+      />
 
-            {company && company.parts && company.parts.length > 0
-                ? (
-                    <FlatList
-                        data={parts}
-                        renderItem={({ item }) => (
-                            <PartCard
-                                id={item.id}
-                                imageUrl={item.imageUrl}
-                                name={item.name}
-                                pricePerPiece={item.pricePerPiece}
-                                quantity={item.quantity}
-                            />
-                        )}
-                        keyExtractor={item => item.id}
-                        contentContainerStyle={styles.listStyle}
-                        showsVerticalScrollIndicator={false}
-                        bounces={false}
-                    />
-                )
-                : <NoDataMsg />
-            }
-        </View>
-    )
+      <View style={styles.headerContainer}>
+        {columns.map((col, index) => (
+          <BaseText
+            key={`${col} ${index}`}
+            style={[
+              styles.columnStyle,
+              getFlexBasis(columns.length)
+            ]}
+          >
+            {col}
+          </BaseText>
+        ))}
+      </View>
+
+      {company && company.parts && company.parts.length > 0
+        ? (
+          <FlatList
+            data={parts}
+            renderItem={({ item }) => (
+              <PartCard
+                id={item.id}
+                imageUrl={item.imageUrl}
+                name={item.name}
+                pricePerPiece={item.pricePerPiece}
+                quantity={item.quantity}
+              />
+            )}
+            keyExtractor={item => item.id}
+            contentContainerStyle={styles.listStyle}
+            showsVerticalScrollIndicator={false}
+            bounces={false}
+          />
+        )
+        : <NoDataMsg />
+      }
+    </View>
+  )
 }
 
 export default PartsInventory;

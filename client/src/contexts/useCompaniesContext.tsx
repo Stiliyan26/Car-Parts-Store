@@ -1,7 +1,6 @@
 import { getAllCompanies } from '../services/adminService';
 import { ApiSuccess, CompanyCardData } from '../types/interface/IData';
 import { ChildrenProps } from '../types/interface/IProps';
-import { useAuthContext } from './useAuthContext';
 
 import { createContext, useContext, useEffect, useState } from 'react';
 
@@ -18,12 +17,10 @@ const defaultContextValue = {
 const CompaniesContext = createContext<CompaniesContextType>(defaultContextValue);
 
 export const CompaniesProvider: React.FC<ChildrenProps> = ({ children }) => {
-  const { setNewTokens } = useAuthContext();
-
   const [companies, setCompanies] = useState<CompanyCardData[] | undefined>(undefined);
 
   useEffect(() => {
-    getAllCompanies(setNewTokens)
+    getAllCompanies()
       .then(res => {
         if (res.statusCode === 200) {
           setCompanies((res as ApiSuccess).payload);

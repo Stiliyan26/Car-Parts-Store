@@ -1,11 +1,6 @@
 import { CreateFormField } from '../types/interface/IForm';
 import icons from './icons';
-import { LOGIN_ROUTE } from './routerConstants';
 
-import { Ionicons } from '@expo/vector-icons';
-
-
-import { Router } from 'expo-router';
 
 const placeholderFunc = (placeholder: string) => `Enter ${placeholder}`;
 
@@ -128,28 +123,3 @@ export const loginFormFields: CreateFormField[] = [
   }
 ];
 
-interface OtherOptions {
-  iconName: keyof typeof Ionicons.glyphMap,
-  textContent: string,
-  onClick: () => Promise<void>
-}
-
-export const otherOptions = (
-  logout: () => Promise<void>,
-  router: Router
-): OtherOptions[] => [
-    {
-      iconName: 'settings',
-      textContent: 'Settings',
-      onClick: async () => { }
-    },
-    {
-      iconName: 'exit-outline',
-      textContent: 'Sign out',
-      onClick: async () => {
-        await logout();
-        
-        router.replace('/(auth)/login');
-      }
-    }
-  ]
