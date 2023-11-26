@@ -3,6 +3,7 @@ import { CompaniesProvider } from '../contexts/useCompaniesContext';
 import { Stack } from 'expo-router';
 import { CurrentCompanyProvider } from '../contexts/useCurrentCompanyContext';
 import useUserData from '../hooks/useUserData';
+import { CompanyProvider } from '../contexts/useCompanyContext';
 
 const StackScreens = () => {
   const { isAuthenticated, isAdmin } = useUserData();
@@ -40,14 +41,16 @@ const StackScreens = () => {
     }
     
     return (
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen
-          name='(company_emp_drawer)'
-          options={{
-            headerShown: false
-          }}
-        />
-      </Stack>
+      <CompanyProvider>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen
+            name='(company_emp_drawer)'
+            options={{
+              headerShown: false
+            }}
+          />
+        </Stack>
+      </CompanyProvider>
     )
   }
 

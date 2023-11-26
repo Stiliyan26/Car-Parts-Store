@@ -6,9 +6,9 @@ import SectionTabs from '../../../components/pages/SectionTabs/SectionTabs';
 import { useNavigationSetup } from '../../../hooks/useNavigationSetup';
 import { empDashboardNavOptions } from '../../../utils/navigationOptions';
 import { SearchProvider } from '../../../contexts/useSearchContext';
-import useEmployeeData from '../../../hooks/useEmployeeData';
 import { EmpDashboardSections, empDashboardSectionsMapper } from '../../../types/enums';
 import { empDashboardComponents } from '../../../utils/sectionsData';
+import { useAuthContext } from '../../../contexts/useAuthContext';
 
 import { 
 	Keyboard, 
@@ -25,14 +25,13 @@ const sectionTabs = [
 ];
 
 const Dashboard = () => {
-	const { company, employee } = useEmployeeData();
+	const { user } = useAuthContext();
 
 	const [activeSectionTab, setActiveSectionTab]
 		= useState<string>(sectionTabs[EmpDashboardSections.INVENTORY]);
 
 	useNavigationSetup(
-		empDashboardNavOptions(styles.navContainer, company?.imageUrl),
-		[company?.imageUrl]
+		empDashboardNavOptions(styles.navContainer, ''),
 	);
 
 	return (
@@ -41,7 +40,7 @@ const Dashboard = () => {
 				<SafeAreaView style={styles.mainContainer}>
 					<View style={styles.marginContainer}>
 						<GreetingAndSearch
-							message={employee ? employee.name : 'User'}
+							message={user ? user.name : 'User'}
 						/>
 
 						<View style={styles.sectionTabsWrapper}>

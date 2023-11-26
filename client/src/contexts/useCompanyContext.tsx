@@ -1,139 +1,82 @@
-import useCompaniesStorage from "../hooks/localStorage/useCompaniesStorage";
-import { CompanyDataContext, Employee, Part } from "../types/interface/IData";
-import { ChildrenProps } from "../types/interface/IProps";
+import { ChildrenProps } from '../types/interface/IProps';
+import { ApiSuccess, ComapnyCommon, Part } from '../types/interface/IData';
+import { getCompanyById } from '../services/companyService';
 
-import { createContext, useContext } from "react";
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { useAuthContext } from './useAuthContext';
 
-export interface CompaniesContextType {
-  createCompany: (companyData: CompanyDataContext) => void;
-  getCompanies: () => CompanyDataContext[];
-  companies: {};
-  getCompanyById: (id: string) => CompanyDataContext | undefined;
-  removeAllCompanies: () => Promise<void>;
-  addEmployeeToCompany: (empData: Employee, compnayId: string) => void;
-  getCompanyEmployees: (id: string) => Employee[];
-  getEmployeeByEmail: (email: string) => Employee | undefined;
-  getCompanyByEmpEmail: (email: string) => CompanyDataContext | undefined;
-  addPartToCompany: (partData: Part, companyId: string | undefined) => void;
+
+interface CompanyData extends ComapnyCommon {
+  parts: Part[]
 }
 
-const defaultValue = {
+const defaultValue: CompanyData = {
   id: "",
   name: "",
   email: "",
-  info: "",
   imageUrl: "",
+  info: "",
   location: "",
-  employees: [],
+  parts: []
+}
+
+interface CompanyContextType {
+  company: CompanyData,
+  parts: Part[],
+  addPart: (part: Part) => void,
+}
+
+const defaultContextValue: CompanyContextType = {
+  company: defaultValue,
   parts: [],
-};
+  addPart: (): void => { }
+}
 
-const defaultContextValue: CompaniesContextType = {
-  createCompany: () => { },
-  getCompanies: () => {
-    return [];
-  },
-  companies: {},
-  getCompanyById: () => {
-    return defaultValue;
-  },
-  removeAllCompanies: async () => { },
-  addEmployeeToCompany: () => { },
-  getCompanyEmployees: () => {
-    return [];
-  },
-  getEmployeeByEmail: () => {
-    return undefined;
-  },
-  getCompanyByEmpEmail: () => {
-    return undefined;
-  },
-  addPartToCompany: () => { },
-};
-
-const CompanyContext = createContext<CompaniesContextType>(defaultContextValue);
-
-const key = "companies";
-const initalValue = {};
+const CompanyContext = createContext<CompanyContextType>(defaultContextValue);
 
 export const CompanyProvider: React.FC<ChildrenProps> = ({ children }) => {
-  const {
-    companies,
-    addCompany,
-    removeAllCompanies,
-    addEmployeeToCompanyStorage,
-    addPartToCompanyStorage,
-  } = useCompaniesStorage(key, initalValue);
-
-  const createCompany = (companyData: CompanyDataContext) => {
-    addCompany(companyData);
-  };
-
-  const getCompanies = () => {
-    const companiesDataArray: CompanyDataContext[] = Object.values(companies);
-
-    return companiesDataArray;
-  };
-
-  const getCompanyById = (id: string) => companies[id];
-
-  const addEmployeeToCompany = (empData: Employee, compnayId: string) =>
-    addEmployeeToCompanyStorage(empData, compnayId);
-
-  const getCompanyEmployees = (id: string) => {
-    const company = getCompanyById(id);
-
-    return company ? company.employees : [];
-  };
-
-  const getEmployeeByEmail = (email: string) => {
-    const foundCompany = getCompanies().find((c) =>
-      c.employees.find((e) => e.email === email)
-    );
-
-    if (foundCompany) {
-      return foundCompany.employees.find((e) => e.email === email);
+  const { user } = useAuthContext();
+  const [company, setCompany] = useState<CompanyData>(defaultValue);
+  
+  useEffect(() => {
+    if (user && user.companyId) {
+      getCompanyById(user.companyId)
+        .then(res => {
+          if (res.statusCode === 200) {
+            setCompany((res as ApiSuccess).payload);
+          }
+        })
+        .catch(error => {
+          console.error((error as Error).message);
+        })
     }
+  }, [user]);
 
-    return undefined;
-  };
+  const addPart = (part: Part): void => {
+    setCompany(prev => ({
+      ...prev,
+      parts: [...prev.parts, part]
+    }))
+  }
 
-  const getCompanyByEmpEmail = (email: string) => {
-    return getCompanies().find((c) =>
-      c.employees.find((e) => e.email === email)
-    );
-  };
-
-  const addPartToCompany = (partData: Part, companyId: string | undefined) =>
-    addPartToCompanyStorage(partData, companyId);
-
-  const contextValue: CompaniesContextType = {
-    createCompany,
-    getCompanies,
-    companies,
-    getCompanyById,
-    removeAllCompanies,
-    addEmployeeToCompany,
-    getCompanyEmployees,
-    getEmployeeByEmail,
-    getCompanyByEmpEmail,
-    addPartToCompany,
-  };
+  const contextValue = {
+    company,
+    parts: company.parts,
+    addPart
+  }
 
   return (
     <CompanyContext.Provider value={contextValue}>
       {children}
     </CompanyContext.Provider>
   );
-};
+}
 
 export const useCompanyContext = () => {
   const companyState = useContext(CompanyContext);
 
   if (!companyState) {
-    throw new Error(
-      "useCompanyContext must be used within an CompanyProvider!"
-    );
+    throw new Error("useCompanyContext must be used within an CompanyProvider!");
   }
 
   return companyState;

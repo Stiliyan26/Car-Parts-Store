@@ -14,7 +14,7 @@ export interface LoginData {
     password: string
 }
 
-export interface CompanyDataCommon {
+export interface CreateCompanyData {
     name: string;
     email: string;
     info: string;
@@ -22,13 +22,20 @@ export interface CompanyDataCommon {
     location: string;
 }
 
-export interface CreateCompanyData extends CompanyDataCommon { }
-
 export interface CreateEmployeeData {
     name: string,
     email: string,
     role: string,
     password: string,
     repeatPassword: string
+}
+
+export interface CreatePartData {
+    name: string
+    imageUrl: string
+    description: string
+    pricePerPiece: number
+    quantity: number,
+    companyId?: string
 }
 

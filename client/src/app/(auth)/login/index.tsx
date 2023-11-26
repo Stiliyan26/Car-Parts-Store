@@ -20,11 +20,6 @@ import { ApiError, ApiSuccess } from '../../../types/interface/IData';
 import { router } from 'expo-router';
 import { useState } from 'react';
 
-interface LoginInitValues {
-  email: string;
-  password: string;
-}
-
 const Login = () => {
   const { login } = useAuthContext();
 
@@ -32,17 +27,12 @@ const Login = () => {
 
   const sourcePage = formSourcePagesMapper[FormSourcePages.LOGIN];
 
-  const initialValues: LoginInitValues = {
+  const initialValues: LoginData = {
     email: '',
     password: '',
   };
 
-  async function handleLogin(data: LoginInitValues): Promise<boolean> {
-    const loginData: LoginData = {
-      email: data.email,
-      password: data.password
-    };
-
+  async function handleLogin(loginData: LoginData): Promise<boolean> {
     try {
       const response = await getUserByEmail(loginData);
 

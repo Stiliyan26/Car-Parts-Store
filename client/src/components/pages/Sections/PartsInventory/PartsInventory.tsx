@@ -4,18 +4,16 @@ import HeaderForList from '../../../common/HeaderForList/HeaderForList';
 import PartCard from '../../PartCard/PartCard';
 import BaseText from '../../../../components/common/BaseText/BaseText';
 import NoDataMsg from '../../../../components/common/NoDataMsg/NoDataMsg';
+import { useCompanyContext } from '../../../../contexts/useCompanyContext';
 
 import { getFlexBasis } from '../../../../utils/UIHelper';
 
 import { FlatList, View } from 'react-native';
-import useEmployeeData from '../../../../hooks/useEmployeeData';
 
 const columns = ['Image', 'Name', 'Price per piece', 'Quantity']
 
 const PartsInventory = () => {
-  const { company } = useEmployeeData();
-
-  const parts = company?.parts;
+  const { parts } = useCompanyContext();
 
   return (
     <View style={styles.container}>
@@ -37,7 +35,7 @@ const PartsInventory = () => {
         ))}
       </View>
 
-      {company && company.parts && company.parts.length > 0
+      {parts.length > 0
         ? (
           <FlatList
             data={parts}

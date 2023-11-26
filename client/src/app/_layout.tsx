@@ -1,7 +1,6 @@
 import StackScreens from './StackScreens';
 
 import { AuthProvider } from '../contexts/useAuthContext';
-import { CompanyProvider } from '../contexts/useCompanyContext';
 
 import { useFonts } from "expo-font";
 import * as SplashScreen from 'expo-splash-screen';
@@ -35,9 +34,7 @@ export default function RootLayoutNav() {
 
 	return (
 		<AuthProvider>
-			<CompanyProvider>
-				<StackScreens />
-			</CompanyProvider>
+			<StackScreens />
 		</AuthProvider>
 	);
 }

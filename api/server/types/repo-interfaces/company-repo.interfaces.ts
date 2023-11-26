@@ -17,7 +17,8 @@ export interface GetCompanyByIdResult extends CompanyCommon {
   id: string,
   email: string,
   info: string,
-  employees: GetEmployeeData[]
+  employees?: GetEmployeeData[],
+  parts?: GetPartResult[]
 }
 //EMPLOYEE INTERFACES //
 
@@ -33,4 +34,15 @@ export interface CreateEmployeeData extends EmployeeCommon {
 //CREATE EMPLOYEE
 export interface CreateEmployeeResult extends EmployeeCommon {
   id: string
+}
+
+// PARTS INTERFACES //
+
+//GET PART
+export interface GetPartResult {
+  id: string,
+  imageUrl: string,
+  name: string,
+  pricePerPiece: number,
+  quantity: number
 }

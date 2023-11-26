@@ -49,7 +49,7 @@ export const allCompanies = async (): Promise<GetAllCompanyResult[]> => {
   });
 }
 
-export const getCompanyById = async (id: string): Promise<GetCompanyByIdResult | null> => {
+export const getCompanyWithEmployeesById = async (id: string): Promise<GetCompanyByIdResult | null> => {
   return await db.company.findUnique({
     where: {
       id
@@ -123,7 +123,7 @@ export const addEmployeeToCompany = async (
   employeeData: CreateEmployeeData
 ): Promise<CreateEmployeeResult | null> => {
   const roleId = await roleRepo.getRoleIdByName(employeeData.role);
-  
+
   if (roleId) {
     const newEmployee = await db.employee.create({
       data: {
@@ -144,11 +144,36 @@ export const addEmployeeToCompany = async (
         }
       }
     })
-    
+
     return { ...newEmployee, role: newEmployee.role.name };
   }
 
   return null;
+}
+
+export const getCompanyWithPartsById = async (id: string): Promise<GetCompanyByIdResult | null> => {
+  return await db.company.findUnique({
+    where: {
+      id
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      location: true,
+      info: true,
+      imageUrl: true,
+      parts: {
+        select: {
+          id: true,
+          imageUrl: true,
+          name: true,
+          pricePerPiece: true,
+          quantity: true
+        }
+      }
+    }
+  })
 }
 
 

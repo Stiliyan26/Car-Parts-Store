@@ -14,6 +14,6 @@ export const addEmployeeToCompany = async (companyId: string, employeeData: Empl
   return await companyRepo.addEmployeeToCompany(companyId, employeeData);
 }
 
-export const getCompanyById = async (companyId: string) => {
-  return await companyRepo.getCompanyById(companyId);
+export const getCompanyWithEmployeesById = async (companyId: string) => {
+  return await companyRepo.getCompanyWithEmployeesById(companyId);
 }

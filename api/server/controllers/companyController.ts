@@ -1,6 +1,7 @@
 import { verifyToken } from '../middlewares/authentication.mw';
 import * as companyService from '../services/compnayService';
 import CreationFailedException from '../exceptions/CreationFailedException';
+import NotFoundException from '../exceptions/NotFoundException';
 
 import express from 'express';
 import type { NextFunction, Request, Response } from 'express';
@@ -8,9 +9,11 @@ import { checkCreatePartBody } from '../middlewares/validation.mw';
 
 export const companyController = express.Router();
 
+const partsUrl = '/parts';
+
 companyController.use(verifyToken());
 
-companyController.post('/part/create',
+companyController.post(`${partsUrl}/create`,
   checkCreatePartBody(),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -26,16 +29,34 @@ companyController.post('/part/create',
     }
   });
 
-companyController.get('/part/all', async (req: Request, res: Response, next: NextFunction) => {
+companyController.get('/:companyId', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const companyId = req.query.companyId as string;
+    console.log('here');
+    const companyId = req.params.companyId;
 
-    const parts = await companyService.getAllPartsByCompanyId(companyId);
+    const company = await companyService.getCompanyWithPartsById(companyId);
 
-    return res.status(200).json(parts);
+    if (!company) {
+      throw new NotFoundException('Company');
+    }
+
+    return res.status(200).json(company);
   } catch (error: unknown) {
     next(error);
   }
-});
+})
+
+
+// companyController.get(`${partsUrl}/all`, async (req: Request, res: Response, next: NextFunction) => {
+//   try {
+//     const companyId = req.query.companyId as string;
+
+//     const parts = await companyService.getAllPartsByCompanyId(companyId);
+
+//     return res.status(200).json(parts);
+//   } catch (error: unknown) {
+//     next(error);
+//   }
+// });
 
 

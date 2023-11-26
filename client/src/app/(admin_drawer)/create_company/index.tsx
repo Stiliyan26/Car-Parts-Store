@@ -17,14 +17,6 @@ import { useCompaniesContext } from '../../../contexts/useCompaniesContext';
 import { router } from 'expo-router';
 import { useState } from 'react';
 
-interface CreateCompanyInitValues {
-  name: string,
-  email: string,
-  imageUrl: string,
-  info: string,
-  location: string
-}
-
 const CreateCompanyForm = () => {
   const { addCompany } = useCompaniesContext();
 
@@ -32,12 +24,12 @@ const CreateCompanyForm = () => {
 
   const sourcePage = formSourcePagesMapper[FormSourcePages.CREATE_COMPANY];
 
-  const initialValues: CreateCompanyInitValues = {
+  const initialValues: CreateCompanyData = {
     name: '',
     email: '',
     imageUrl: '',
     info: '',
-    location: ''
+    location: '',
   }
 
   const animationComponent = <DiagonalAnimation
@@ -45,15 +37,7 @@ const CreateCompanyForm = () => {
     dynamicStyles={styles.image}
   />
 
-  async function handleCreateCompany(data: CreateCompanyInitValues): Promise<boolean> {
-    const companyData: CreateCompanyData = {
-      name: data.name,
-      email: data.email,
-      info: data.info,
-      imageUrl: data.imageUrl,
-      location: data.location,
-    }
-
+  async function handleCreateCompany(companyData: CreateCompanyData): Promise<boolean> {
     try {
       const response = await createCompany(companyData);
       

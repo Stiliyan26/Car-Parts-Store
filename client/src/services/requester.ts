@@ -12,7 +12,7 @@ export const requester = async (
   body: {} | null = null,
 ): Promise<ApiResponse> => {
   let options: RequestInit = {};
-
+  
   if (isNotAuthorizedRequest(url)) {
     options = await createOptions(method, body);
   } else {
@@ -32,9 +32,9 @@ export const requester = async (
       options = await createOptions(method, body, accessToken);
     }
   }
-
+  
   const fetchedData = await fetch(url, options);
-
+  
   const statusCode = fetchedData.status;
   const result = await fetchedData.json();
 

@@ -13,7 +13,9 @@ export interface AuthData {
     id: string,
     email: string,
     name: string
-    isAdmin: boolean
+    isAdmin: boolean,
+    role?: string,
+    companyId?: string
     tokenData: TokenData
 }
 
@@ -51,7 +53,6 @@ export interface Part {
     quantity: string
 }
 
-
 export interface ApiResponse {
     statusCode: number
 }
@@ -64,6 +65,14 @@ export interface ApiError extends ApiResponse {
     errorMsg: string
 } 
 
+export interface ComapnyCommon {
+    id: string,
+    name: string,
+    email: string,
+    info: string,
+    imageUrl: string,
+    location: string
+}
 // export type ApiResponse = {
 //     statusCode: number,
 //     payload: any
@@ -76,13 +85,7 @@ export interface CompanyCardData {
     location: string,
 }
 
-export interface CompanyData {
-    id: string,
-    name: string,
-    email: string,
-    imageUrl: string,
-    info: string,
-    location: string,
+export interface CompanyData extends ComapnyCommon {
     employees: EmployeeData[]
 }
 
@@ -91,6 +94,8 @@ export interface EmployeeData {
     email: string,
     role: string
 }
+
+
 
 
 

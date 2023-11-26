@@ -9,67 +9,75 @@ import { labelConstants, images } from '../../../constants';
 import { formSourcePagesMapper, FormSourcePages } from '../../../types/enums';
 import { createPartNavOptions } from '../../../utils/navigationOptions';
 import { COMPANY_EMP_DASHBOARD } from '../../../constants/routerConstants';
-import { Part } from '../../../types/interface/IData';
-import { generateId } from '../../../utils/helperFunctions';
-import useEmployeeData from '../../../hooks/useEmployeeData';
+import { createPart } from '../../../services/companyService';
+import { useCompanyContext } from '../../../contexts/useCompanyContext';
+import { ApiSuccess } from '../../../types/interface/IData';
+import { useAuthContext } from '../../../contexts/useAuthContext';
 
 import { router } from 'expo-router';
 
-interface CreatePartInitValues {
-    name: string,
-    imageUrl: string,
-    description: string,
-    pricePerPiece: string,
-    quantity: string
+interface CreatePartsInital {
+  name: string;
+  imageUrl: string;
+  description: string;
+  pricePerPiece: string;
+  quantity: string;
 }
 
 const CreatePartForm = () => {
-    const { company } = useEmployeeData();
+  const { user } = useAuthContext();
+  const { addPart } = useCompanyContext();
 
-    const sourcePage = formSourcePagesMapper[FormSourcePages.CREATE_PART];
+  const sourcePage = formSourcePagesMapper[FormSourcePages.CREATE_PART];
 
-    const initialValues: CreatePartInitValues = {
-        name: '',
-        imageUrl: '',
-        description: '',
-        pricePerPiece: '',
-        quantity: ''
-    }
-    
-    const animationComponent = <RotationAnimation
-        source={images.partLogo}
-        dynamicStyles={styles.image}
-    />
+  const initialValues: CreatePartsInital = {
+    name: '',
+    imageUrl: '',
+    description: '',
+    pricePerPiece: '',
+    quantity: ''
+  }
 
-    async function handleCreatePart(data: CreatePartInitValues): Promise<boolean> {
-        const part: Part = {
-            id: generateId(),
-            name: data.name,
-            imageUrl: data.imageUrl,
-            description: data.description,
-            pricePerPiece: data.pricePerPiece,
-            quantity: data.quantity
-        };
-        //Change
-        //addPartToCompany(part, company?.id);
+  const animationComponent = <RotationAnimation
+    source={images.partLogo}
+    dynamicStyles={styles.image}
+  />
+
+  async function handleCreatePart(partData: CreatePartsInital): Promise<boolean> {
+    try {
+      const response = await createPart({
+        ...partData,
+        pricePerPiece: parseFloat(partData.pricePerPiece),
+        quantity: parseInt(partData.quantity),
+        companyId: user?.companyId
+      });
+
+      if (response.statusCode === 200) {
+        addPart((response as ApiSuccess).payload);
 
         router.push(COMPANY_EMP_DASHBOARD);
 
         return true;
+      } 
+    } catch (error) {
+      console.error((error as Error).message);
     }
 
-    return (
-        <CustomForm
-            sourcePage={sourcePage}
-            initialValues={initialValues}
-            animationComponent={animationComponent}
-            formFields={createPartFormFields}
-            validationSchema={createPartFormSchema}
-            buttonLabel={labelConstants.BTN_CREATE_LABEL}
-            onSubmit={handleCreatePart}
-            navOptions={createPartNavOptions}
-        />
-    )
+    return false;
+  }
+
+  return (
+    <CustomForm
+      sourcePage={sourcePage}
+      initialValues={initialValues}
+      animationComponent={animationComponent}
+      formFields={createPartFormFields}
+      validationSchema={createPartFormSchema}
+      buttonLabel={labelConstants.BTN_CREATE_LABEL}
+      onSubmit={handleCreatePart}
+      navOptions={createPartNavOptions}
+    />
+  )
 }
 
 export default CreatePartForm;

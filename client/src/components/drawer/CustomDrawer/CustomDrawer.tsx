@@ -4,7 +4,6 @@ import DrawerOptions from '../DrawerOptions/DrawerOptions';
 import BaseText from '../../common/BaseText/BaseText';
 
 import { useAuthContext } from '../../../contexts/useAuthContext';
-import useEmployeeData from '../../../hooks/useEmployeeData';
 import { icons, images } from '../../../constants';
 
 import {
@@ -29,8 +28,7 @@ const CustomDrawer: React.FC<CustomDrawerProps> = ({
     image
 }) => {
     const { user } = useAuthContext();
-    //const { company } = useEmployeeData();
-
+    
     return (
         <View style={styles.container}>
             <DrawerContentScrollView

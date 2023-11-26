@@ -25,6 +25,7 @@ export interface AuthPayload extends UserCommon, JwtPayload {
 
 export interface AuthData extends UserCommon {
   role?: string,
+  companyId?: string,
   isAdmin: boolean,
   iat?: number
 }
@@ -33,7 +34,8 @@ export interface AdminData extends UserCommon {
 }
 
 export interface EmployeeData extends UserCommon {
-  role: string
+  role: string,
+  companyId: string
 }
 
 export interface TokenData {

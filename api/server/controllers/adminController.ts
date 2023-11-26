@@ -80,7 +80,7 @@ adminController.get(`${companiesUrl}/:companyId`,
     try {
       const { companyId } = req.params;
 
-      const company = await adminService.getCompanyById(companyId);
+      const company = await adminService.getCompanyWithEmployeesById(companyId);
 
       if (!company) {
         throw new NotFoundException('Company');

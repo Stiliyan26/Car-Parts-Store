@@ -22,7 +22,8 @@ export const getEmployeeByEmailAndPassword = async (
         select: { 
           name: true
         }
-      }
+      },
+      companyId: true
     }
   }).then(emp => {
     if (emp) {

@@ -18,14 +18,6 @@ import { useCurrentCompanyContext } from '../../../contexts/useCurrentCompanyCon
 import { useLocalSearchParams, router } from 'expo-router';
 import { useState } from 'react';
 
-interface CreateUserInitValues {
-  name: string,
-  email: string,
-  role: string,
-  password: string,
-  repeatPassword: string
-}
-
 const CreateEmployeeForm = () => {
   const { addEmployee } = useCurrentCompanyContext();
 
@@ -35,7 +27,7 @@ const CreateEmployeeForm = () => {
 
   const sourcePage = formSourcePagesMapper[FormSourcePages.CREATE_EMPLOYEE];
 
-  const initialValues: CreateUserInitValues = {
+  const initialValues: CreateEmployeeData = {
     name: '',
     email: '',
     role: '',
@@ -48,15 +40,7 @@ const CreateEmployeeForm = () => {
     dynamicStyles={styles.image}
   />
 
-  async function handleCreateCompany(data: CreateUserInitValues): Promise<boolean> {
-    const newEmployee: CreateEmployeeData = {
-      name: data.name,
-      email: data.email,
-      role: data.role,
-      password: data.password,
-      repeatPassword: data.repeatPassword
-    }
-
+  async function handleCreateCompany(newEmployee: CreateEmployeeData): Promise<boolean> {
     try {
       const response = await createEmployee(companyId, newEmployee);
 
@@ -65,7 +49,7 @@ const CreateEmployeeForm = () => {
         addEmployee((response as ApiSuccess).payload);
 
         router.push(COMPANIES_DETAILS_ROUTE(companyId));
-        
+
         return true;
       } else if (response.statusCode === 409) {
         setApiError((response as ApiError).errorMsg);
