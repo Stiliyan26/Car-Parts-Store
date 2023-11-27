@@ -31,7 +31,6 @@ companyController.post(`${partsUrl}/create`,
 
 companyController.get('/:companyId', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log('here');
     const companyId = req.params.companyId;
 
     const company = await companyService.getCompanyWithPartsById(companyId);
@@ -45,7 +44,6 @@ companyController.get('/:companyId', async (req: Request, res: Response, next: N
     next(error);
   }
 })
-
 
 // companyController.get(`${partsUrl}/all`, async (req: Request, res: Response, next: NextFunction) => {
 //   try {

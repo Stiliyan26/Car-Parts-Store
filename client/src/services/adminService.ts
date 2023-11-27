@@ -1,6 +1,6 @@
 import { request } from './requester';
-import { ApiResponse } from '../types/interface/IData';
-import { CreateCompanyData, CreateEmployeeData } from '../types/interface/IForm';
+import { ApiResponse } from '../types/interface/core-interface';
+import { CreateCompanyData, CreateEmployeeData } from '../types/interface/form-interface';
 import { API_URL } from '../constants/GlabalConstants';
 
 const baseUrl = `${API_URL}/admin`;

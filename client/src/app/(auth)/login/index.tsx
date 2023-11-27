@@ -14,8 +14,8 @@ import {
 import { FormSourcePages, formSourcePagesMapper } from '../../../types/enums';
 import { loginNavOptions } from '../../../utils/navigationOptions';
 import { getUserByEmail } from '../../../services/authService';
-import { LoginData } from '../../../types/interface/IForm';
-import { ApiError, ApiSuccess } from '../../../types/interface/IData';
+import { LoginData } from '../../../types/interface/form-interface';
+import { ApiError, ApiSuccess } from '../../../types/interface/core-interface';
 
 import { router } from 'expo-router';
 import { useState } from 'react';

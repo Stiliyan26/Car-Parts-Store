@@ -1,4 +1,4 @@
-import { CreateFormField } from '../types/interface/IForm';
+import { CreateFormField } from '../types/interface/form-interface';
 import icons from './icons';
 
 

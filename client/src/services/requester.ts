@@ -1,4 +1,4 @@
-import { ApiError, ApiResponse, ApiSuccess, AuthData, TokenData } from '../types/interface/IData';
+import { ApiError, ApiResponse, ApiSuccess, AuthData, TokenData } from '../types/interface/core-interface';
 
 import { API_URL, authStorageKey } from '../constants/GlabalConstants';
 import AsyncStorage from '@react-native-async-storage/async-storage';

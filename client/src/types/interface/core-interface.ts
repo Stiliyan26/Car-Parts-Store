@@ -90,6 +90,7 @@ export interface CompanyData extends ComapnyCommon {
 }
 
 export interface EmployeeData {
+    id: string,
     name: string,
     email: string,
     role: string

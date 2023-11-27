@@ -3,7 +3,7 @@ import styles from "./SectionTabs.style";
 import TabButton from "../../common/TabButton/TabButton";
 
 import { FlatList } from "react-native";
-import { TabsCommonProps } from "../../../types/interface/IProps";
+import { TabsCommonProps } from "../../../types/interface/props-interface";
 
 interface SectionTabsProps extends TabsCommonProps {
   sectionTabs: string[];

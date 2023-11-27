@@ -1,4 +1,4 @@
-import { SIZES } from '../../../constants';
+import { SIZES } from '../../../../constants';
 
 import { StyleSheet} from 'react-native';
 

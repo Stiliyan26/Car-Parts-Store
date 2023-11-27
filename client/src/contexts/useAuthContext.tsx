@@ -1,5 +1,5 @@
-import { ChildrenProps } from '../types/interface/IProps';
-import { AuthData, TokenData } from '../types/interface/IData';
+import { ChildrenProps } from '../types/interface/props-interface';
+import { AuthData, TokenData } from '../types/interface/core-interface';
 import { authStorageKey } from '../constants/GlabalConstants';
 import useAuthAsyncStorage from '../hooks/localStorage/useAuthAsyncStorage';
 import { deleteRefreshToken } from '../services/authService';

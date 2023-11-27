@@ -1,6 +1,6 @@
 import { getCompanyById } from '../services/adminService';
-import { ApiSuccess, CompanyData, EmployeeData } from '../types/interface/IData';
-import { ChildrenProps } from '../types/interface/IProps';
+import { ApiSuccess, CompanyData, EmployeeData } from '../types/interface/core-interface';
+import { ChildrenProps } from '../types/interface/props-interface';
 
 import { createContext, useContext, useEffect, useState } from 'react';
 

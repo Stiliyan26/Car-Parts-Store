@@ -1,11 +1,11 @@
 import styles from "./CompanyDetailsTitle.style";
 
-import InfoRowWithIcon from "../../common/InfoRowWithIcon/InfoRowWithIcon";
-import BaseText from "../../common/BaseText/BaseText";
+import InfoRowWithIcon from "../../../common/InfoRowWithIcon/InfoRowWithIcon";
+import BaseText from "../../../common/BaseText/BaseText";
 
-import companyImages from "../../../constants/companiesImages";
-import { CompanyInfoCommonProps } from "../../../types/interface/IProps";
-import { icons } from "../../../constants";
+import companyImages from "../../../../constants/companiesImages";
+import { CompanyInfoCommonProps } from "../../../../types/interface/props-interface";
+import { icons } from "../../../../constants";
 
 import { View, Image, ImageSourcePropType } from "react-native";
 

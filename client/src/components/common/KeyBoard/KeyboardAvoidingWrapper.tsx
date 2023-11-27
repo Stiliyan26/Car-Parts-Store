@@ -1,4 +1,4 @@
-import { ChildrenProps } from "../../../types/interface/IProps";
+import { ChildrenProps } from "../../../types/interface/props-interface";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 

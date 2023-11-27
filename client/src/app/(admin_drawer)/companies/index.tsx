@@ -1,7 +1,7 @@
 import styles from '../../../styles/companies.style';
 
 import GreetingAndSearch from '../../../components/common/GreetingAndSearch/GreetingAndSearch';
-import CompaniesWrapper from '../../../components/pages/CompaniesWrapper/CompaniesWrapper';
+import CompaniesWrapper from '../../../components/pages/Company/CompaniesWrapper/CompaniesWrapper';
 import AppLoader from '../../../components/common/Loader/AppLoader';
 
 import { useAuthContext } from '../../../contexts/useAuthContext';

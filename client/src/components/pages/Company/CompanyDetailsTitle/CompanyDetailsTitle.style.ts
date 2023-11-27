@@ -1,4 +1,4 @@
-import { COLORS, FONT, SIZES, SHADOWS } from '../../../constants';
+import { COLORS, FONT, SIZES, SHADOWS } from '../../../../constants';
 
 import { StyleSheet } from 'react-native';
 

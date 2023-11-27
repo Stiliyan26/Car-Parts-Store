@@ -1,6 +1,6 @@
 import { ObjectSchema } from 'yup';
 import { TextInputProps } from 'react-native/Libraries/Components/TextInput/TextInput';
-import { CreateFormField } from './IForm';
+import { CreateFormField } from './form-interface';
 
 import type {
   Dispatch,

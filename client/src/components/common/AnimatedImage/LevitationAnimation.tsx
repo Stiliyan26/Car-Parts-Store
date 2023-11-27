@@ -1,4 +1,4 @@
-import { AnimatedImageProps } from "../../../types/interface/IProps";
+import { AnimatedImageProps } from "../../../types/interface/props-interface";
 
 import { Animated, Easing } from "react-native";
 import { useEffect } from "react";

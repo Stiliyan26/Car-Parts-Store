@@ -1,6 +1,6 @@
 import { request } from './requester';
-import { LoginData } from '../types/interface/IForm';
-import { ApiResponse } from '../types/interface/IData';
+import { LoginData } from '../types/interface/form-interface';
+import { ApiResponse } from '../types/interface/core-interface';
 import { API_URL } from '../constants/GlabalConstants';
 
 const baseUrl = `${API_URL}/auth`;

@@ -1,19 +1,33 @@
 import styles from './PartsInventory.style';
 
 import HeaderForList from '../../../common/HeaderForList/HeaderForList';
-import PartCard from '../../PartCard/PartCard';
-import BaseText from '../../../../components/common/BaseText/BaseText';
-import NoDataMsg from '../../../../components/common/NoDataMsg/NoDataMsg';
+import BaseText from '../../../common/BaseText/BaseText';
+import NoDataMsg from '../../../common/NoDataMsg/NoDataMsg';
+import AppLoader from '../../../common/Loader/AppLoader';
+import PartCardList from '../../Part/PartCardList/PartCardList';
+
 import { useCompanyContext } from '../../../../contexts/useCompanyContext';
 
 import { getFlexBasis } from '../../../../utils/UIHelper';
 
-import { FlatList, View } from 'react-native';
+import { View } from 'react-native';
 
 const columns = ['Image', 'Name', 'Price per piece', 'Quantity']
 
 const PartsInventory = () => {
-  const { parts } = useCompanyContext();
+  const { parts, isLoading } = useCompanyContext();
+
+  const getParts = () => {
+    if (isLoading) {
+      return <AppLoader />;
+    } 
+    
+    if (parts.length === 0) {
+      return <NoDataMsg />;
+    }
+
+    return <PartCardList parts={parts} />
+  }
 
   return (
     <View style={styles.container}>
@@ -25,37 +39,14 @@ const PartsInventory = () => {
         {columns.map((col, index) => (
           <BaseText
             key={`${col} ${index}`}
-            style={[
-              styles.columnStyle,
-              getFlexBasis(columns.length)
-            ]}
+            style={[styles.columnStyle, getFlexBasis(columns.length)]}
           >
             {col}
           </BaseText>
         ))}
       </View>
 
-      {parts.length > 0
-        ? (
-          <FlatList
-            data={parts}
-            renderItem={({ item }) => (
-              <PartCard
-                id={item.id}
-                imageUrl={item.imageUrl}
-                name={item.name}
-                pricePerPiece={item.pricePerPiece}
-                quantity={item.quantity}
-              />
-            )}
-            keyExtractor={item => item.id}
-            contentContainerStyle={styles.listStyle}
-            showsVerticalScrollIndicator={false}
-            bounces={false}
-          />
-        )
-        : <NoDataMsg />
-      }
+      {getParts()}
     </View>
   )
 }

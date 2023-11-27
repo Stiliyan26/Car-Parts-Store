@@ -2,7 +2,7 @@ import styles from "./TabButton.style";
 
 import BaseText from "../BaseText/BaseText";
 
-import { TabsCommonProps } from "../../../types/interface/IProps";
+import { TabsCommonProps } from "../../../types/interface/props-interface";
 import { getTabColor, getTabTextColor } from "../../../utils/UIHelper";
 import { TouchableOpacity } from "react-native";
 

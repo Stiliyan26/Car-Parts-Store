@@ -1,5 +1,5 @@
-import { ChildrenProps } from '../types/interface/IProps';
-import { ApiSuccess, ComapnyCommon, Part } from '../types/interface/IData';
+import { ChildrenProps } from '../types/interface/props-interface';
+import { ApiSuccess, ComapnyCommon, Part } from '../types/interface/core-interface';
 import { getCompanyById } from '../services/companyService';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
@@ -23,12 +23,14 @@ const defaultValue: CompanyData = {
 interface CompanyContextType {
   company: CompanyData,
   parts: Part[],
+  isLoading: boolean,
   addPart: (part: Part) => void,
 }
 
 const defaultContextValue: CompanyContextType = {
   company: defaultValue,
   parts: [],
+  isLoading: true,
   addPart: (): void => { }
 }
 
@@ -36,7 +38,9 @@ const CompanyContext = createContext<CompanyContextType>(defaultContextValue);
 
 export const CompanyProvider: React.FC<ChildrenProps> = ({ children }) => {
   const { user } = useAuthContext();
+
   const [company, setCompany] = useState<CompanyData>(defaultValue);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   
   useEffect(() => {
     if (user && user.companyId) {
@@ -44,6 +48,7 @@ export const CompanyProvider: React.FC<ChildrenProps> = ({ children }) => {
         .then(res => {
           if (res.statusCode === 200) {
             setCompany((res as ApiSuccess).payload);
+            setIsLoading(false);
           }
         })
         .catch(error => {
@@ -62,6 +67,7 @@ export const CompanyProvider: React.FC<ChildrenProps> = ({ children }) => {
   const contextValue = {
     company,
     parts: company.parts,
+    isLoading,
     addPart
   }
 

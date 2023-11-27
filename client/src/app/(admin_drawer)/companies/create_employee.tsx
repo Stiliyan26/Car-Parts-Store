@@ -10,9 +10,9 @@ import { labelConstants, images } from '../../../constants';
 import { COMPANIES_DETAILS_ROUTE } from '../../../constants/routerConstants';
 import { formSourcePagesMapper, FormSourcePages } from '../../../types/enums';
 import { createEmployeeNavOptions } from '../../../utils/navigationOptions';
-import { CreateEmployeeData } from '../../../types/interface/IForm';
+import { CreateEmployeeData } from '../../../types/interface/form-interface';
 import { createEmployee } from '../../../services/adminService';
-import { ApiError, ApiSuccess } from '../../../types/interface/IData';
+import { ApiError, ApiSuccess } from '../../../types/interface/core-interface';
 import { useCurrentCompanyContext } from '../../../contexts/useCurrentCompanyContext';
 
 import { useLocalSearchParams, router } from 'expo-router';

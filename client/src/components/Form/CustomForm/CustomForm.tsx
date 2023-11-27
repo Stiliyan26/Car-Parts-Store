@@ -5,7 +5,7 @@ import FormikWrapper from '../FormikWrapper/FormikWrapper';
 import KeyboardAvoidingWrapper from '../../../components/common/KeyBoard/KeyboardAvoidingWrapper';
 
 import { useNavigationSetup } from '../../../hooks/useNavigationSetup';
-import { FormCommonProps } from '../../../types/interface/IProps';
+import { FormCommonProps } from '../../../types/interface/props-interface';
 
 import {
   SafeAreaView,

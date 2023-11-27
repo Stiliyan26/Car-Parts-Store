@@ -11,7 +11,7 @@ import { FormSourcePages, formSourcePagesMapper } from '../../../types/enums';
 import { Formik, FormikHelpers } from 'formik';
 import { View, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
-import { FormCommonProps } from '../../../types/interface/IProps';
+import { FormCommonProps } from '../../../types/interface/props-interface';
 
 
 const FormikWrapper = <T extends Record<string, any>>({
@@ -42,45 +42,53 @@ const FormikWrapper = <T extends Record<string, any>>({
           {apiError ? (
             <ErrorField
               errorMessage={apiError}
-              dynamicStyles={{textAlign: 'center'}}
+              dynamicStyles={{ textAlign: 'center' }}
             />
           )
             : null
           }
-          {formFields.map((fields, index) => {
-            const borderStyle = getBorderColor(focusedField, errors, touched, fields.fieldName);
+          {formFields.map((field, index) => {
+            const borderStyle = getBorderColor(focusedField, errors, touched, field.fieldName);
 
             const stylesToAdd = { paddingLeft: 40 };
 
-            const iconStyle = getIconColor(errors, touched, fields.fieldName);
+            const iconStyle = getIconColor(errors, touched, field.fieldName);
 
             const fieldName =
-              fields.fieldName as keyof T;
+              field.fieldName as keyof T;
+
+            const inputInfo = {
+              value: values[fieldName],
+              placeholder: field.placeholder,
+              secureTextEntry: field.secureTextEntry,
+              keyboardType: field.keyboardType,
+              icon: field.icon,
+            }
+
+            const styleInfo = {
+              dynamicStyle: { ...borderStyle, ...stylesToAdd },
+              iconStyle: iconStyle
+            }
 
             return (
-              <View key={`${fields.fieldName} ${index}`} style={{ marginTop: 10 }}>
+              <View key={`${field.fieldName} ${index}`} style={{ marginTop: 10 }}>
                 <BaseText style={styles.label}>
-                  {fields.label}
+                  {field.label}
                 </BaseText>
 
                 <FormInputField
-                  placeholder={fields.placeholder}
-                  dynamicStyle={{ ...borderStyle, ...stylesToAdd }}
-                  secureTextEntry={fields.secureTextEntry}
-                  keyboardType={fields.keyboardType}
-                  icon={fields.icon}
-                  iconStyle={iconStyle}
-                  onChangeText={handleChange(fields.fieldName)}
+                  inputInfo={inputInfo}
+                  styleInfo={styleInfo}
+                  onChangeText={handleChange(field.fieldName)}
                   onBlur={(e) => {
                     setFocusedField('');
 
-                    return handleBlur(fields.fieldName)(e);
+                    return handleBlur(field.fieldName)(e);
                   }}
-                  onFocus={() => setFocusedField(fields.fieldName)}
-                  value={values[fieldName]}
+                  onFocus={() => setFocusedField(field.fieldName)}
                 />
 
-                {showError(touched, errors, fields.fieldName)
+                {showError(touched, errors, field.fieldName)
                   && (
                     <ErrorField
                       errorMessage={errors[fieldName] as string}

@@ -1,4 +1,4 @@
-import EmployeeSection from '../components/pages/Sections/Employee/EmployeeSection';
+import EmployeeSection from '../components/pages/Sections/Employee/EmployeeSection/EmployeeSection';
 import PurchasedPartsSection from '../components/pages/Sections/PurchasedParts/PurchasedPartsSection';
 import SalePartsSection from '../components/pages/Sections/SaleParts/SalePartsSection';
 

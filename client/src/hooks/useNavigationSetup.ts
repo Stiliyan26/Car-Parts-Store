@@ -4,12 +4,12 @@ import { useEffect } from 'react';
 import { StackNavigationOptions } from '@react-navigation/stack';
 
 export function useNavigationSetup(
-    options: StackNavigationOptions,
-    dependencies: any[] = []
+  options: StackNavigationOptions,
+  dependencies: any[] = []
 ) {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
 
-    useEffect(() => {
-        navigation.setOptions(options);
-    }, dependencies);
+  useEffect(() => {
+    navigation.setOptions(options);
+  }, dependencies);
 }

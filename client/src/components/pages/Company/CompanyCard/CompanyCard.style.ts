@@ -1,36 +1,39 @@
-import { COLORS, SHADOWS, SIZES } from '../../../constants';
-
+import { COLORS, FONT, SIZES, SHADOWS } from '../../../../constants';
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
-        margin: 10,
+        flex: 1,
         backgroundColor: COLORS.white,
         padding: SIZES.medium,
+        margin: 10,
         borderRadius: SIZES.small,
         flexDirection: 'row',
-        ...SHADOWS.small,
         alignItems: 'center',
+        ...SHADOWS.small,
     },
     logoContainer: {
         width: 60,
         height: 60,
         borderRadius: SIZES.medium,
         backgroundColor: COLORS.white,
-        ...SHADOWS.small,
+        alignItems: 'center',
+        justifyContent: 'center',
+        ...SHADOWS.small
     },
     image: {
-        width: '100%',
         height: '100%',
-        borderRadius: SIZES.small,
+        width: '100%',
+        borderRadius: SIZES.xSmall,
     },
-    infoItem: {
-        color: COLORS.darkestGray,
-        textAlign: 'center'
+    textContainer: {
+        marginHorizontal: SIZES.medium,
     },
-    infoItemImg: {
-        color: COLORS.darkestGray,
-        alignItems: 'center',
+    companyName: {
+        marginBottom: 3
+    },
+    location: {
+        color: COLORS.darkGray
     }
 });
 

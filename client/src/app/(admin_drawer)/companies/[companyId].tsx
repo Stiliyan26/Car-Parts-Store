@@ -1,6 +1,6 @@
 import styles from '../../../styles/companyDetails.style';
 
-import CompanyDetailsTitle from '../../../components/pages/CompanyDetailsTitle/CompanyDetailsTitle';
+import CompanyDetailsTitle from '../../../components/pages/Company/CompanyDetailsTitle/CompanyDetailsTitle';
 import SectionTabs from '../../../components/pages/SectionTabs/SectionTabs';
 import SectionFooter from '../../../components/pages/Sections/SectionFooter/SectionFooter';
 

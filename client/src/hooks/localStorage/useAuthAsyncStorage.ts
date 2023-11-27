@@ -1,4 +1,4 @@
-import { AuthData, TokenData } from '../../types/interface/IData';
+import { AuthData, TokenData } from '../../types/interface/core-interface';
 import { addStorageListener, removeStorageListener } from '../../utils/storageEventLiseners';
 
 import { useEffect, useState } from 'react';

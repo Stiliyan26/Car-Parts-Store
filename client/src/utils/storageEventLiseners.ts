@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { AuthData } from '../types/interface/IData';
+import { AuthData } from '../types/interface/core-interface';
 import { authStorageKey, tokenListenerKey } from '../constants/GlabalConstants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

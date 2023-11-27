@@ -1,4 +1,4 @@
-import { ChildrenProps } from "../types/interface/IProps";
+import { ChildrenProps } from "../types/interface/props-interface";
 
 import { createContext, useContext, useEffect, useState } from "react";
 

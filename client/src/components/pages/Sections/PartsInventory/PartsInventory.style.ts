@@ -19,9 +19,6 @@ const styles = StyleSheet.create({
         fontSize: SIZES.small + 2,
         color: COLORS.darkestGray
     },
-    listStyle: {
-        borderRadius: SIZES.medium,
-    }
 });
 
 export default styles;

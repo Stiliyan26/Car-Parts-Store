@@ -1,24 +1,24 @@
 import styles from './CompanyCard.style';
 
-import BaseText from '../../common/BaseText/BaseText';
+import BaseText from '../../../common/BaseText/BaseText';
 
-import companyImages from '../../../constants/companiesImages';
-import { COMPANIES_DETAILS_ROUTE } from '../../../constants/routerConstants';
-import { CompanyInfoCommonProps } from '../../../types/interface/IProps';
-import { useCurrentCompanyContext } from '../../../contexts/useCurrentCompanyContext';
+import companyImages from '../../../../constants/companiesImages';
+import { COMPANIES_DETAILS_ROUTE } from '../../../../constants/routerConstants';
+import { CompanyInfoCommonProps } from '../../../../types/interface/props-interface';
+import { useCurrentCompanyContext } from '../../../../contexts/useCurrentCompanyContext';
 
 import { router } from 'expo-router';
 import { View, TouchableOpacity, Image } from 'react-native';
 
 interface ComapnyCardProps extends CompanyInfoCommonProps {
-  companyId: string;
+  id: string;
 }
 
 const CompanyCard: React.FC<ComapnyCardProps> = ({
-  companyId,
+  id,
   name,
   imageUrl,
-  location,
+  location
 }) => {
   const { setCompanyId } = useCurrentCompanyContext();
 
@@ -26,13 +26,13 @@ const CompanyCard: React.FC<ComapnyCardProps> = ({
     <TouchableOpacity
       style={styles.container}
       onPress={() => {
-        setCompanyId(companyId);
-        router.push(COMPANIES_DETAILS_ROUTE(companyId));
+        setCompanyId(id);
+        router.push(COMPANIES_DETAILS_ROUTE(id));
       }}
     >
       <TouchableOpacity
         style={styles.logoContainer}
-        onPress={() => router.push(COMPANIES_DETAILS_ROUTE(companyId))}
+        onPress={() => router.push(COMPANIES_DETAILS_ROUTE(id))}
       >
         <Image
           style={styles.image}

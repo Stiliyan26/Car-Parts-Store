@@ -9,9 +9,9 @@ import { labelConstants, images } from '../../../constants';
 import { COMPANIES_ROUTE } from '../../../constants/routerConstants';
 import { formSourcePagesMapper, FormSourcePages } from '../../../types/enums';
 import { createCompaniesNavOptions } from '../../../utils/navigationOptions';
-import { CreateCompanyData } from '../../../types/interface/IForm';
+import { CreateCompanyData } from '../../../types/interface/form-interface';
 import { createCompany } from '../../../services/adminService';
-import { ApiError, ApiSuccess } from '../../../types/interface/IData';
+import { ApiError, ApiSuccess } from '../../../types/interface/core-interface';
 import { useCompaniesContext } from '../../../contexts/useCompaniesContext';
 
 import { router } from 'expo-router';

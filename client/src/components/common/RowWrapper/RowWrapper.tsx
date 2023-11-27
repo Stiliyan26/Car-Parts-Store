@@ -5,28 +5,28 @@ import { getFlexBasis } from '../../../utils/UIHelper';
 import { StyleProp, TextStyle } from 'react-native';
 
 export interface RowWrapperProps {
-    values: string[],
-    columns: string[],
-    dynamicStyles: StyleProp<TextStyle>
+  values: string[],
+  columnsLen: number,
+  dynamicStyles: StyleProp<TextStyle>
 }
 const RowWrapper: React.FC<RowWrapperProps> = ({
-    values,
-    columns,
-    dynamicStyles
+  values,
+  columnsLen,
+  dynamicStyles
 }) => {
-    return (
-        values.map((value, index) => (
-            <BaseText
-                key={`${value} ${index}`}
-                style={[
-                    dynamicStyles,
-                    getFlexBasis(columns.length)
-                ]}
-            >
-                {value}
-            </BaseText>
-        ))
-    )
+  return (
+    values.map((value, index) => (
+      <BaseText
+        key={`${value} ${index}`}
+        style={[
+          dynamicStyles,
+          getFlexBasis(columnsLen)
+        ]}
+      >
+        {value}
+      </BaseText>
+    ))
+  )
 }
 
 export default RowWrapper;

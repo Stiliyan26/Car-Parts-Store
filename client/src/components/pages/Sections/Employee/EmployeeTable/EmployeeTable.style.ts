@@ -10,16 +10,6 @@ const styles = StyleSheet.create({
         paddingVertical: SIZES.small,
         fontSize: SIZES.medium,
         color: COLORS.darkestGray,
-    },
-    infoRow: {
-        flexDirection: 'row',
-        paddingVertical: SIZES.small - 5,
-        alignItems: 'center',
-    },
-    infoText: {
-        fontSize: SIZES.small + 2,
-        color: COLORS.gray3,
-        textAlign: 'center',
     }
 });
 

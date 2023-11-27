@@ -1,6 +1,7 @@
 import StackScreens from './StackScreens';
 
 import { AuthProvider } from '../contexts/useAuthContext';
+import AppLoader from '../components/common/Loader/AppLoader';
 
 import { useFonts } from "expo-font";
 import * as SplashScreen from 'expo-splash-screen';

@@ -11,7 +11,7 @@ import { createPartNavOptions } from '../../../utils/navigationOptions';
 import { COMPANY_EMP_DASHBOARD } from '../../../constants/routerConstants';
 import { createPart } from '../../../services/companyService';
 import { useCompanyContext } from '../../../contexts/useCompanyContext';
-import { ApiSuccess } from '../../../types/interface/IData';
+import { ApiSuccess } from '../../../types/interface/core-interface';
 import { useAuthContext } from '../../../contexts/useAuthContext';
 
 import { router } from 'expo-router';
