@@ -1,7 +1,9 @@
 import { AuthPayload, CustomRequest } from '../types/core.interfaces';
-import AuthenticationTokenMissingException from '../exceptions/AuthenticationTokenMissingException';
-import InvalidAuthenticationTokenException from '../exceptions/InvalidAuthenticationTokenException';
-import NotAuthorizedException from '../exceptions/NotAuthorizedException';
+import {
+  AuthenticationTokenMissingException,
+  InvalidAuthenticationTokenException,
+  NotAuthorizedException
+} from '../exceptions';
 import { ACCESS_TOKEN, Token } from '../constants/globalConstants';
 
 import type { NextFunction, Request, Response } from 'express';
@@ -27,14 +29,14 @@ export function verifyToken(tokenType: Token = ACCESS_TOKEN) {
         }
 
         const user = authPayload as AuthPayload;
-        
+
         if (user) {
           const request = req as CustomRequest;
           request.user = user;
           request.token = token;
         }
       });
-      
+
       next();
     } catch (error) {
       next(error);
@@ -46,7 +48,7 @@ export function isAdmin() {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
       const user = (req as CustomRequest).user;
-      
+
       if (user.isAdmin === false) {
         throw new NotAuthorizedException();;
       }

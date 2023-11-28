@@ -21,11 +21,14 @@ authController.post('/login',
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email, password }: LoginBody = req.body;
-      
+
       const authData: AuthData = await authService.getUser(email, password);
       const tokenData: TokenData = await authService.getAuthTokens(authData);
 
-      return res.status(200).json({ ...authData, tokenData });
+      return res
+        .cookie('tokenData', tokenData.refreshToken, { httpOnly: true })
+        .status(200)
+        .json({ ...authData, tokenData });
 
     } catch (error: unknown) {
       next(error);
@@ -48,15 +51,15 @@ authController.post('/refreshToken', verifyToken(REFRESH_TOKEN),
 
 
 authController.delete('/logout', verifyToken(REFRESH_TOKEN),
- async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const refreshToken = (req as CustomRequest).token;
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const refreshToken = (req as CustomRequest).token;
 
-    await authService.deleteRefreshToken(refreshToken);
+      await authService.deleteRefreshToken(refreshToken);
 
-    res.status(200).json('Refresh token deleted!');
-  } catch (error: unknown) {
-    next(error);
-  }
-})
+      res.status(204).json('Refresh token deleted!');
+    } catch (error: unknown) {
+      next(error);
+    }
+  })
 

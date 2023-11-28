@@ -7,9 +7,11 @@ import {
 import * as tokenRepo from '../repos/tokenRepo';
 import { getAdminByEmailAndPassword } from '../repos/adminRepo';
 import { getEmployeeByEmailAndPassword } from '../repos/employeeRepo';
-import AuthenticationTokenMissingException from '../exceptions/AuthenticationTokenMissingException';
-import UserNotFoundException from '../exceptions/UserNotFoundException';
-import InvalidAuthenticationTokenException from '../exceptions/InvalidAuthenticationTokenException';
+import {
+  InvalidAuthenticationTokenException,
+  UserNotFoundException,
+  AuthenticationTokenMissingException
+} from '../exceptions';
 
 import jwt from 'jsonwebtoken';
 
@@ -29,7 +31,7 @@ export const getAccessTokenExp = (accessToken: string) => {
 
 export async function verifyRefreshToken(refreshToken: string) {
   const existingRefreshToken = await tokenRepo.getRefreshToken(refreshToken);
-  
+
   if (!existingRefreshToken) {
     throw new AuthenticationTokenMissingException();
   }
@@ -60,9 +62,9 @@ export async function verifyRefreshToken(refreshToken: string) {
     })
   })
 }
-function IsUserAdmin(user: unknown): user is EmployeeData { 
-  return (user as EmployeeData).role === undefined 
-}; 
+function IsUserAdmin(user: unknown): user is EmployeeData {
+  return (user as EmployeeData).role === undefined
+};
 export async function getUser(email: string, password: string) {
   let user: AdminData | EmployeeData | null = null;
 

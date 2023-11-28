@@ -4,7 +4,7 @@ import { globalErrorHandler } from './middlewares/error-handlers.mw';
 import * as dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
-import { AuthPayload } from './types/core.interfaces';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -16,8 +16,9 @@ const PORT: number = parseInt(process.env.PORT as string, 10);
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: ['http://localhost:8080'], credentials: true }));
 app.use(express.json());
+app.use(cookieParser())
 
 //Routes configuration
 routesConfig(app);

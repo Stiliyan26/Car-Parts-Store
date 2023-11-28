@@ -1,11 +1,10 @@
 import { verifyToken } from '../middlewares/authentication.mw';
 import * as companyService from '../services/compnayService';
-import CreationFailedException from '../exceptions/CreationFailedException';
-import NotFoundException from '../exceptions/NotFoundException';
+import {CreationFailedException, NotFoundException} from '../exceptions';
+import { checkCreatePartBody } from '../middlewares/validation.mw';
 
 import express from 'express';
 import type { NextFunction, Request, Response } from 'express';
-import { checkCreatePartBody } from '../middlewares/validation.mw';
 
 export const companyController = express.Router();
 
@@ -23,7 +22,7 @@ companyController.post(`${partsUrl}/create`,
         throw new CreationFailedException('Part');
       }
 
-      return res.status(200).json(part);
+      return res.status(201).json(part);
     } catch (error: unknown) {
       next(error);
     }

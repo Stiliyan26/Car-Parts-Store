@@ -6,12 +6,14 @@ import {
 import { verifyToken, isAdmin } from '../middlewares/authentication.mw';
 import * as adminService from '../services/adminService';
 import { CreateCompanyReqBody, EmployeeReqBody } from '../types/request.interfaces';
-import NotFoundException from '../exceptions/NotFoundException';
-import BadRequestException from '../exceptions/BadRequestException';
+import {
+  BadRequestException,
+  NotFoundException,
+  CreationFailedException
+} from '../exceptions';
 
 import express from 'express';
 import type { NextFunction, Request, Response } from 'express';
-import CreationFailedException from '../exceptions/CreationFailedException';
 
 export const adminController = express.Router();
 
@@ -33,7 +35,7 @@ adminController.post(`${companiesUrl}/create`,
         throw new NotFoundException(data.name);
       }
 
-      return res.status(200).json(company);
+      return res.status(201).json(company);
     } catch (error: unknown) {
       next(error);
     }
@@ -68,7 +70,7 @@ adminController.post(`${companiesUrl}/employees/create`,
         throw new CreationFailedException('Employee');
       }
 
-      res.status(200).json(newEmployee);
+      res.status(201).json(newEmployee);
     } catch (error: unknown) {
       next(error);
     }

@@ -13,6 +13,7 @@ import { CreateCompanyData } from '../../../types/interface/form-interface';
 import { createCompany } from '../../../services/adminService';
 import { ApiError, ApiSuccess } from '../../../types/interface/core-interface';
 import { useCompaniesContext } from '../../../contexts/useCompaniesContext';
+import { isResponseOk } from '../../../utils/helperFunctions';
 
 import { router } from 'expo-router';
 import { useState } from 'react';
@@ -41,7 +42,7 @@ const CreateCompanyForm = () => {
     try {
       const response = await createCompany(companyData);
       
-      if (response.statusCode === 200) {
+      if (isResponseOk(response.statusCode)) {
         setApiError('');
         addCompany((response as ApiSuccess).payload);
 

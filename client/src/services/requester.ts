@@ -3,6 +3,7 @@ import { ApiError, ApiResponse, ApiSuccess, AuthData, TokenData } from '../types
 import { API_URL, authStorageKey } from '../constants/GlabalConstants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { triggerStorageListener } from '../utils/storageEventLiseners';
+import { isResponseOk } from '../utils/helperFunctions';
 
 type RequestMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
@@ -32,13 +33,13 @@ export const requester = async (
       options = await createOptions(method, body, accessToken);
     }
   }
-  
+
   const fetchedData = await fetch(url, options);
   
   const statusCode = fetchedData.status;
   const result = await fetchedData.json();
 
-  return statusCode === 200
+  return isResponseOk(statusCode)
     ? { statusCode, payload: result } as ApiSuccess
     : { statusCode, errorMsg: result } as ApiError;
 };
@@ -55,7 +56,7 @@ const createOptions = async (
   options.headers = {};
 
   if (accessToken) {
-    options.headers['Authorization'] = `Bearer ${accessToken}`
+    options.headers['Authorization'] = `Bearer ${accessToken}`;
   }
 
   if (method == 'GET') {

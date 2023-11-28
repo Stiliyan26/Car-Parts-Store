@@ -14,6 +14,7 @@ import { CreateEmployeeData } from '../../../types/interface/form-interface';
 import { createEmployee } from '../../../services/adminService';
 import { ApiError, ApiSuccess } from '../../../types/interface/core-interface';
 import { useCurrentCompanyContext } from '../../../contexts/useCurrentCompanyContext';
+import { isResponseOk } from '../../../utils/helperFunctions';
 
 import { useLocalSearchParams, router } from 'expo-router';
 import { useState } from 'react';
@@ -44,7 +45,7 @@ const CreateEmployeeForm = () => {
     try {
       const response = await createEmployee(companyId, newEmployee);
 
-      if (response.statusCode === 200) {
+      if (isResponseOk(response.statusCode)) {
         setApiError('');
         addEmployee((response as ApiSuccess).payload);
 

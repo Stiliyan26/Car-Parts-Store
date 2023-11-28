@@ -10,7 +10,6 @@ export const generateId = () => {
             .substring(2, 15);
 }
 
-
 export function filteredBySearchQuery<T extends { name: string }>(
     data: T[],
     searchQuery: string
@@ -49,3 +48,5 @@ interface OtherOptions {
         }
       }
     ]
+
+export const isResponseOk = (statusCode: number) => 200 <= statusCode && statusCode <= 299;

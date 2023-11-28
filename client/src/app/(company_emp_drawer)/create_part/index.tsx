@@ -13,6 +13,7 @@ import { createPart } from '../../../services/companyService';
 import { useCompanyContext } from '../../../contexts/useCompanyContext';
 import { ApiSuccess } from '../../../types/interface/core-interface';
 import { useAuthContext } from '../../../contexts/useAuthContext';
+import { isResponseOk } from '../../../utils/helperFunctions';
 
 import { router } from 'expo-router';
 
@@ -52,7 +53,7 @@ const CreatePartForm = () => {
         companyId: user?.companyId
       });
 
-      if (response.statusCode === 200) {
+      if (isResponseOk(response.statusCode)) {
         addPart((response as ApiSuccess).payload);
 
         router.push(COMPANY_EMP_DASHBOARD);

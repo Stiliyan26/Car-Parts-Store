@@ -16,6 +16,7 @@ import { loginNavOptions } from '../../../utils/navigationOptions';
 import { getUserByEmail } from '../../../services/authService';
 import { LoginData } from '../../../types/interface/form-interface';
 import { ApiError, ApiSuccess } from '../../../types/interface/core-interface';
+import { isResponseOk } from '../../../utils/helperFunctions';
 
 import { router } from 'expo-router';
 import { useState } from 'react';
@@ -36,7 +37,7 @@ const Login = () => {
     try {
       const response = await getUserByEmail(loginData);
 
-      if (response.statusCode === 200) {
+      if (isResponseOk(response.statusCode)) {
         setApiError('');
         await login((response as ApiSuccess).payload);
 
