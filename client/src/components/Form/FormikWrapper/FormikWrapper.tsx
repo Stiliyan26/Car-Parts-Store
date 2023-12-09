@@ -12,6 +12,7 @@ import { Formik, FormikHelpers } from 'formik';
 import { View, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 import { FormCommonProps } from '../../../types/interface/props-interface';
+import ImageInput from '../../common/Input/ImageInput/ImageInput';
 
 
 const FormikWrapper = <T extends Record<string, any>>({
@@ -37,7 +38,7 @@ const FormikWrapper = <T extends Record<string, any>>({
         }
       }}
     >
-      {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
+      {({ values, errors, touched, setFieldValue, handleChange, handleBlur, handleSubmit }) => (
         <View style={styles.inputContainer}>
           {apiError ? (
             <ErrorField
@@ -54,8 +55,7 @@ const FormikWrapper = <T extends Record<string, any>>({
 
             const iconStyle = getIconColor(errors, touched, field.fieldName);
 
-            const fieldName =
-              field.fieldName as keyof T;
+            const fieldName = field.fieldName as keyof T;
 
             const inputInfo = {
               value: values[fieldName],
@@ -72,25 +72,37 @@ const FormikWrapper = <T extends Record<string, any>>({
 
             return (
               <View key={`${field.fieldName} ${index}`} style={{ marginTop: 10 }}>
-                <BaseText style={styles.label}>
-                  {field.label}
-                </BaseText>
+                {field.fieldName === 'imageUri'
+                  ? <ImageInput
+                    onSelectImage={(image) => {
+                      setFieldValue(field.fieldName, image);
+                    }}
+                  />
+                  : (
+                    <>
+                      <BaseText style={styles.label}>
+                        {field.label}
+                      </BaseText>
 
-                <FormInputField
-                  inputInfo={inputInfo}
-                  styleInfo={styleInfo}
-                  onChangeText={handleChange(field.fieldName)}
-                  onBlur={(e) => {
-                    setFocusedField('');
+                      <FormInputField
+                        inputInfo={inputInfo}
+                        styleInfo={styleInfo}
+                        onChangeText={handleChange(field.fieldName)}
+                        onBlur={(e) => {
+                          setFocusedField('');
 
-                    return handleBlur(field.fieldName)(e);
-                  }}
-                  onFocus={() => setFocusedField(field.fieldName)}
-                />
+                          return handleBlur(field.fieldName)(e);
+                        }}
+                        onFocus={() => setFocusedField(field.fieldName)}
+                      />
+                    </>
+                  )
+                }
 
                 {showError(touched, errors, field.fieldName)
                   && (
                     <ErrorField
+                      dynamicStyles={field.fieldName === 'imageUri' ? { alignSelf: 'center' } : null}
                       errorMessage={errors[fieldName] as string}
                     />
                   )

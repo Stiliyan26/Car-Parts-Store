@@ -18,7 +18,7 @@ export interface CreateCompanyData {
     name: string;
     email: string;
     info: string;
-    imageUrl: string;
+    imageUri: string;
     location: string;
 }
 

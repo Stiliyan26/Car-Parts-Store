@@ -1,6 +1,6 @@
 import styles from '../../../styles/form.style';
 
-import CustomForm from '../../../components/Form/CustomForm/CustomForm';
+import FormTemplate from '../../../components/Form/FormTemplate/FormTemplate';
 import LevitationAnimation from '../../../components/common/AnimatedImage/LevitationAnimation';
 
 import { useAuthContext } from '../../../contexts/useAuthContext';
@@ -65,7 +65,7 @@ const Login = () => {
   );
 
   return (
-    <CustomForm
+    <FormTemplate
       sourcePage={sourcePage}
       initialValues={initialValues}
       animationComponent={animationComponent}

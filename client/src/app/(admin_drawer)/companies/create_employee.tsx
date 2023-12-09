@@ -1,6 +1,6 @@
 import styles from '../../../styles/form.style';
 
-import CustomForm from '../../../components/Form/CustomForm/CustomForm';
+import FormTemplate from '../../../components/Form/FormTemplate/FormTemplate';
 import LevitationAnimation from '../../../components/common/AnimatedImage/LevitationAnimation';
 
 import { createUserFormFields } from '../../../constants/IterableData';
@@ -63,7 +63,7 @@ const CreateEmployeeForm = () => {
   }
 
   return (
-    <CustomForm
+    <FormTemplate
       sourcePage={sourcePage}
       initialValues={initialValues}
       animationComponent={animationComponent}

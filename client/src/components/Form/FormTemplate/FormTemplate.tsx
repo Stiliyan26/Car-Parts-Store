@@ -1,8 +1,8 @@
-import styles from './CustomForm.style';
+import styles from './FormTemplate.style';
 
 import BaseText from '../../common/BaseText/BaseText';
 import FormikWrapper from '../FormikWrapper/FormikWrapper';
-import KeyboardAvoidingWrapper from '../../../components/common/KeyBoard/KeyboardAvoidingWrapper';
+import KeyboardAvoidingWrapper from '../../common/KeyBoard/KeyboardAvoidingWrapper';
 
 import { useNavigationSetup } from '../../../hooks/useNavigationSetup';
 import { FormCommonProps } from '../../../types/interface/props-interface';
@@ -17,12 +17,12 @@ import { Router, router } from 'expo-router';
 import { ReactElement } from 'react';
 import { StackNavigationOptions } from '@react-navigation/stack';
 
-interface CustomFormProps<T> extends FormCommonProps<T> {
+interface FormTemplateProps<T> extends FormCommonProps<T> {
   animationComponent: ReactElement;
   navOptions: (styles: {}, router: Router) => StackNavigationOptions;
 }
 
-const CustomForm = <T extends Record<string, any>>({
+const FormTemplate = <T extends Record<string, any>>({
   sourcePage = '',
   initialValues,
   animationComponent,
@@ -32,7 +32,7 @@ const CustomForm = <T extends Record<string, any>>({
   apiError,
   onSubmit,
   navOptions,
-}: CustomFormProps<T>) => {
+}: FormTemplateProps<T>) => {
   //Setting page navigation
   useNavigationSetup(navOptions(styles.navContainer, router));
 
@@ -65,4 +65,4 @@ const CustomForm = <T extends Record<string, any>>({
   );
 };
 
-export default CustomForm;
+export default FormTemplate;

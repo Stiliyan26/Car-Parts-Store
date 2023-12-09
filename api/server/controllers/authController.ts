@@ -25,10 +25,7 @@ authController.post('/login',
       const authData: AuthData = await authService.getUser(email, password);
       const tokenData: TokenData = await authService.getAuthTokens(authData);
 
-      return res
-        .cookie('tokenData', tokenData.refreshToken, { httpOnly: true })
-        .status(200)
-        .json({ ...authData, tokenData });
+      return res.status(200).json({ ...authData, tokenData });
 
     } catch (error: unknown) {
       next(error);

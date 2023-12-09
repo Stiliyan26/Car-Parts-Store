@@ -7,67 +7,69 @@ import { useAuthContext } from '../../../contexts/useAuthContext';
 import { icons, images } from '../../../constants';
 
 import {
-    DrawerContentComponentProps,
-    DrawerContentScrollView,
-    DrawerItemList,
+  DrawerContentComponentProps,
+  DrawerContentScrollView,
+  DrawerItemList,
 } from '@react-navigation/drawer';
 import {
-    View,
-    ImageBackground,
-    Image,
-    ImageSourcePropType
+  View,
+  ImageBackground,
+  Image,
+  ImageSourcePropType
 } from 'react-native';
+import { useCompanyContext } from '../../../contexts/useCompanyContext';
 
 export interface CustomDrawerProps {
-    props: DrawerContentComponentProps,
-    image: ImageSourcePropType
+  props: DrawerContentComponentProps,
+  image: ImageSourcePropType
 }
 
 const CustomDrawer: React.FC<CustomDrawerProps> = ({
-    props,
-    image
+  props,
+  image
 }) => {
-    const { user } = useAuthContext();
-    
-    return (
-        <View style={styles.container}>
-            <DrawerContentScrollView
-                contentContainerStyle={styles.drawerContentScrollView}
-                bounces={false}
-            >
-                <ImageBackground
-                    style={styles.drawerBackgroundImg}
-                    source={images.drawerBackgroundImg}
-                >
-                    <Image
-                        source={image}
-                        style={styles.logo}
-                    />
+  const { user } = useAuthContext();
+  const { company } = useCompanyContext();
 
-                    <BaseText style={styles.primaryText}>
-                        {user ? user.email : 'User'}
-                    </BaseText>
+  return (
+    <View style={styles.container}>
+      <DrawerContentScrollView
+        contentContainerStyle={styles.drawerContentScrollView}
+        bounces={false}
+      >
+        <ImageBackground
+          style={styles.drawerBackgroundImg}
+          source={images.drawerBackgroundImg}
+        >
+          <Image
+            source={image}
+            style={styles.logo}
+          />
 
-                    <View style={styles.secondaryTextWrapper}>
-                        <BaseText style={styles.secondaryText}>
-                            {'Sky batics'}
-                        </BaseText>
+          <BaseText style={styles.primaryText}>
+            {user ? user.email : 'User'}
+          </BaseText>
 
-                        <Image 
-                            style={styles.secondaryImage}
-                            source={icons.company}
-                        />
-                    </View>
-                </ImageBackground>
+          <View style={styles.secondaryTextWrapper}>
+            <BaseText style={styles.secondaryText}>
+              {!user.isAdmin && company ? company.name : 'Admin'}
+            </BaseText>
 
-                <View style={styles.drawerOptions}>
-                    <DrawerItemList {...props} />
-                </View>
-            </DrawerContentScrollView>
-            {/* Other drawer options */}
-            <DrawerOptions />
+            <Image
+              style={styles.secondaryImage}
+              source={icons.company}
+            />
+          </View>
+        </ImageBackground>
+
+        <View style={styles.drawerOptions}>
+          <DrawerItemList {...props} />
         </View>
-    )
+      </DrawerContentScrollView>
+      {/* Other drawer options */}
+      <DrawerOptions />
+    </View>
+  )
 }
 
 export default CustomDrawer;

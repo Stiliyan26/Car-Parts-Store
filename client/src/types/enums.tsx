@@ -36,3 +36,9 @@ export const empDashboardSectionsMapper: { [key in EmpDashboardSections]: string
     [EmpDashboardSections.SALES]: 'Sales',
     [EmpDashboardSections.REPORTS]: 'Reports',
 }
+
+export enum CookieStorageKey {
+    ACCESS_TOKEN = 'accessToken',
+    REFRESH_TOKEN = 'refreshToken',
+    EXP_ACCESS_TOKEN = 'exp-access-token'
+}

@@ -146,5 +146,3 @@ export async function getAuthStorageData(): Promise<AuthData | null> {
 function isNotAuthorizedRequest(url: string) {
   return url.includes('/api/auth/login');
 }
-
-

@@ -1,6 +1,6 @@
 import styles from '../../../styles/form.style';
 
-import CustomForm from '../../../components/Form/CustomForm/CustomForm';
+import FormTemplate from '../../../components/Form/FormTemplate/FormTemplate';
 import RotationAnimation from '../../../components/common/AnimatedImage/RotationAnimation';
 
 import { createPartFormFields } from '../../../constants/IterableData';
@@ -68,7 +68,7 @@ const CreatePartForm = () => {
   }
 
   return (
-    <CustomForm
+    <FormTemplate
       sourcePage={sourcePage}
       initialValues={initialValues}
       animationComponent={animationComponent}

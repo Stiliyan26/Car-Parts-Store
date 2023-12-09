@@ -1,6 +1,6 @@
 import styles from '../../../styles/form.style';
 
-import CustomForm from '../../../components/Form/CustomForm/CustomForm';
+import FormTemplate from '../../../components/Form/FormTemplate/FormTemplate';
 import DiagonalAnimation from '../../../components/common/AnimatedImage/DiagonalAnimation';
 
 import { createCompanyFormFields } from '../../../constants/IterableData';
@@ -28,7 +28,7 @@ const CreateCompanyForm = () => {
   const initialValues: CreateCompanyData = {
     name: '',
     email: '',
-    imageUrl: '',
+    imageUri: '',
     info: '',
     location: '',
   }
@@ -60,7 +60,7 @@ const CreateCompanyForm = () => {
   }
 
   return (
-    <CustomForm
+    <FormTemplate
       sourcePage={sourcePage}
       initialValues={initialValues}
       animationComponent={animationComponent}

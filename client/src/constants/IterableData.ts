@@ -6,6 +6,12 @@ const placeholderFunc = (placeholder: string) => `Enter ${placeholder}`;
 
 export const createCompanyFormFields: CreateFormField[] = [
   {
+    fieldName: 'imageUri',
+    placeholder: 'image',
+    label: 'Choose logo:',
+    icon: icons.image
+  },
+  {
     fieldName: 'name',
     placeholder: placeholderFunc('name'),
     label: 'Name',
@@ -16,12 +22,6 @@ export const createCompanyFormFields: CreateFormField[] = [
     placeholder: placeholderFunc('email'),
     label: 'Email',
     icon: icons.mail
-  },
-  {
-    fieldName: 'imageUrl',
-    placeholder: placeholderFunc('image url'),
-    label: 'Image Url',
-    icon: icons.image
   },
   {
     fieldName: 'info',
