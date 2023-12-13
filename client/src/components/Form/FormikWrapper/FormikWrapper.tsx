@@ -7,6 +7,7 @@ import BaseText from '../../common/BaseText/BaseText';
 
 import { getBorderColor, getIconColor, showError } from '../../../utils/UIHelper';
 import { FormSourcePages, formSourcePagesMapper } from '../../../types/enums';
+import { API_URL } from '../../../../src/constants/GlabalConstants';
 
 import { Formik, FormikHelpers } from 'formik';
 import { View, TouchableOpacity } from 'react-native';

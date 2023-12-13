@@ -96,11 +96,11 @@ export function checkCreateCompanyBody() {
         options: (email: string) => emailValidation(email, 30)
       }
     },
-    imageUrl: {
-      custom: {
-        options: (imageUrl: string) => stringValidation(imageUrl, 'Image Url', 5, 30)
-      }
-    },
+    // imageUri: {
+    //   custom: {
+    //     options: (imageUri: string) => stringValidation(imageUri, 'ImageUri', 5, 10000)
+    //   }
+    // },
     info: {
       custom: {
         options: (info: string) => stringValidation(info, 'Info', 5, 50)

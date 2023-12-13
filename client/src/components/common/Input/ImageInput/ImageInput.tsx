@@ -20,7 +20,7 @@ const ImageInput: React.FC<ImageInputProps> = ({ onSelectImage }) => {
     if (status !== 'granted') {
       Alert.alert(
         'Permission Denied',
-        `Sorry, we need camera roll permission to upload images.`);
+        `Sorry, we need camera roll permission to upload images.`); 
     } else {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -29,7 +29,7 @@ const ImageInput: React.FC<ImageInputProps> = ({ onSelectImage }) => {
         quality: 1,
       });
 
-      if (!result.canceled) {
+      if (!result.canceled && result.assets[0].type && result.assets[0].fileName) {
         onSelectImage(result.assets[0].uri);
         setFile(result.assets[0].uri);
         setError(null);

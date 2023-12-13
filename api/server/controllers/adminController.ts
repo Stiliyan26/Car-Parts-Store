@@ -11,12 +11,12 @@ import {
   NotFoundException,
   CreationFailedException
 } from '../exceptions';
+import upload from '../config/multer';
 
 import express from 'express';
 import type { NextFunction, Request, Response } from 'express';
 
 export const adminController = express.Router();
-
 
 const companiesUrl = '/companies';
 
@@ -24,6 +24,7 @@ adminController.use(verifyToken());
 adminController.use(isAdmin());
 
 adminController.post(`${companiesUrl}/create`,
+  upload.single('imageUri'),
   checkCreateCompanyBody(),
   getValidationResult(),
   async (req: Request, res: Response, next: NextFunction) => {

@@ -79,7 +79,7 @@ export const request = {
 }
 
 
-async function refreshAccessToken(expToCheck: number, tokenToSent: string) {
+ async function refreshAccessToken(expToCheck: number, tokenToSent: string) {
   try {
     const currentDate = new Date();
     const buffer = 60000;

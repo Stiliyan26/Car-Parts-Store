@@ -30,7 +30,10 @@ export const createCompanyFormSchema = yup.object().shape({
         .required('Email is required!')
         .max(30, `Email should be less than 30 characters long!`)
         .matches(emailPattern, 'Invalid email format!'),
-    imageUri: commonTextInputValidation('ImageUri', 5, 10000),
+    imageUri: yup.string()
+        .required(`ImageUri is required!`)
+        .min(5, `ImageUri should be at least 5 characters long!`)
+        .max(10000, `ImageUri should be less than 10000 characters long!`),
     info: commonTextInputValidation('Info', 5, 50),
     location: commonTextInputValidation('Location', 5, 30),
 });
